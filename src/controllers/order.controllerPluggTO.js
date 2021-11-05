@@ -1,123 +1,95 @@
-const db = require("../config/database");
-const fetch = require('node-fetch');
+//const db = require("../config/database");
+//const fetch = require('node-fetch');
+//const { default: axios } = require('axios');
+const axios = require("axios").default;
+
+// Get All Orders
+exports.listAllOrders = async (req, res) => {
+try {
+  const { data } = await axios.get('http://jsonplaceholder.typicode.com/users');
+  return res.send({ data });
+  //return res.send({ req.body });
+ } catch (error) {
+  res.send({ error: error.message});
+}
+};
+///////////
+///////////
+// Get One Order For ID
+exports.findOrderById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { data } = await axios.get(`http://jsonplaceholder.typicode.com/users/${id}`);
+    return res.send({ data });
+    //return res.send(data.name);
+
+  } catch (error) {
+    res.send({ error: error.message});
+  }
+  };
+
+  // Create Order PluggTO on DataBase
+exports.createOrder = async (req, res) => {
+  const { id_produto, quantidade } = req.body;
+  const { rows } = await db.query(
+    'INSERT INTO orders (id_produto, quantidade) VALUES ($1, $2)',
+    [id_produto, quantidade],
+  );
+
+  res.status(201).send({
+    message: 'Pedido Criado com Successo',
+    body: {
+      order: { id_produto, quantidade }
+      
+    },
+  });
+};
 
 ////Get All Orders
-exports.listAllOrders = async (req, res) => {
-  const url = 'https://api.plugg.to/orders';
-  const options = {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      Authorization: 'Bearer {ACCESS_TOKEN}',
-      'Content-Type': 'application/json'
-    }
-  };
-};
-
-fetch(url, options)
-.then(res => res.json())
-.then(json => console.log(json))
-.catch(err => console.error('error:' + err));
 
 ////Get One Order For ID
-exports.findOrderById = async (req, res) => {
-const url = 'https://api.plugg.to/orders/plugg_order_id';
-const options = {
-  method: 'GET',
-  headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  }
-};
-}; 
-
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
 
 ////Status Update Order
-exports.updateOrderById = async (req, res) => {  
-  const url = 'https://api.plugg.to/orders/plugg_id';
-  const options = {
-    method: 'PUT',
-    headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  }
-};
-};
-
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
 
 ////----Order receipt confirmation----////
-const url = 'https://api.plugg.to/orders/plugg_id_order';
-const options = {
-  method: 'PUT',
-  headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({external: 'external id', ack: true})
-};
+//Como faço para obter dados de uma API externa e armazená-los em meu banco de dados local? (javascript)
+//https://stackoverflow.com/questions/50993390/how-do-i-fetch-data-from-an-external-api-and-store-it-in-my-local-database-jav
 
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
+const express = require('express');
+const request = require('request');
+const pg = require('pg');
 
-////Update invoice (Fatura)
-const url = 'https://api.plugg.to/orders/pluggto_order_id';
-const options = {
-  method: 'PUT',
-  headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  }
-};
+const app = express(); 
+const connectionString = 'postgres://username:password@localhost/pg_demo_db' // your connection string 
 
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
+app.get('/getdata/:id', function(req, res) { 
+    if (!req.params.id) { 
+       res.status(500); 
+       res.send({"Error": "No ID"}); 
+    } 
+    request.get(
+        // here I am using JSONPlaceholder API (Fake Online REST API for prototyping)
+        { url: "https://jsonplaceholder.typicode.com/posts/" + req.params.id }, 
+        function(error, response, body) { 
+            if (!error && response.statusCode == 200) { 
+                // get data from body ... e.g. title
+                const data = JSON.parse(body);
+                const title = data.title || '';
 
-////Update invoices by documents (Atualizar faturas por documentos)
-const url = 'https://api.plugg.to/orders/plugg_order_id';
-const options = {
-  method: 'PUT',
-  headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  }
-};
+                // store in Postgresql
+                pg.connect(connectionString, (err, client, done) => {
+                    done();
+                    // Handle connection errors
+                    if(err) {
+                        console.log(err);
+                        return res.status(500).json({success: false, data: err});
+                    }
+                    // SQL Query > Insert Data
+                    client.query('INSERT INTO titles(id, title) values($1, $2)', [req.params.id, title]);
 
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));
-
-////Update Order Tracking Status (Rastreio)
-const url = 'https://api.plugg.to/orders/plugg_id';
-const options = {
-  method: 'PUT',
-  headers: {
-    Accept: 'application/json',
-    Authorization: 'Bearer {ACCESS_TOKEN}',
-    'Content-Type': 'application/json'
-  }
-};
-
-fetch(url, options)
-  .then(res => res.json())
-  .then(json => console.log(json))
-  .catch(err => console.error('error:' + err));  
-
-////Get Labels
+                    res.json({title: title}); 
+                })
+            } 
+        }
+    ); 
+}); 

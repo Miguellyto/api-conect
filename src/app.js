@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use(express.json({ type: 'application/vnd.api+json' }));
 
 app.use(index);
-app.use('/api/', productRoute);
-app.use('/api/', orderRoute);
+app.use('/api', productRoute);
+app.use('/api', orderRoute);
 
 module.exports = app;
