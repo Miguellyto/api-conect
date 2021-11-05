@@ -52,6 +52,8 @@ exports.createOrder = async (req, res) => {
 ////Status Update Order
 
 ////----Order receipt confirmation----////
+
+
 //Como faço para obter dados de uma API externa e armazená-los em meu banco de dados local? (javascript)
 //https://stackoverflow.com/questions/50993390/how-do-i-fetch-data-from-an-external-api-and-store-it-in-my-local-database-jav
 
@@ -76,7 +78,7 @@ app.get('/getdata/:id', function(req, res) {
                 const data = JSON.parse(body);
                 const title = data.title || '';
 
-                // store in Postgresql
+                // store in Postgresql -- devem usar o pg pool
                 pg.connect(connectionString, (err, client, done) => {
                     done();
                     // Handle connection errors
