@@ -1,6 +1,9 @@
 const router = require('express-promise-router')();
 const orderController = require('../controllers/order.controller');
 
+//  Seleciona pedido pelo Id: (GET): localhost:4000/api/order/:id
+router.get('/data/:id', orderController.findDataById);
+
 // ==> Rota responsável por criar um novo pedido: (POST): localhost:4000/api/order
 router.post('/order', orderController.createOrder);
 

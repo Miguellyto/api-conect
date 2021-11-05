@@ -1,12 +1,15 @@
+//const db = require("../config/database");
 const express = require('express');
 const request = require('request');
-const pg = require('pg');
+//const pg = require('pg');
+const { Pool } = require('pg');
+const pool = new Pool();
 
 const app = express(); 
 const connectionString = 'postgres://postgres:root@localhost:5432/ecommerce' // your connection string 
 
 //DATABASE_URL=postgres://postgres:root@localhost:5432/ecommerce
-
+//-- /getdata/4
 app.get('/getdata/:id', function(req, res) { 
     if (!req.params.id) { 
        res.status(500); 
