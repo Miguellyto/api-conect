@@ -41,3 +41,75 @@ app.get('/getdata/:id', function(req, res) {
         }
     ); 
 }); 
+//////////////////////////////////////////////////////
+
+var express = require('express');
+var router = express.Router();
+var http = require('http');
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/zak", {native_parser : true});
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+
+var site = 'http://www.vsechnyzakazky.cz/api/v1/zakazka/?format=json&limit=2';
+
+
+function getData(cb) {
+
+    http.get(site, function(res) {
+        // explicitly treat incoming data as utf8 (avoids issues with multi-byte chars)
+        res.setEncoding('utf8');
+
+        // incrementally capture the incoming response body
+        var body = '';
+        res.on('data', function(d) {
+            body += d;
+        });
+
+        // do whatever we want with the response once it's done
+        res.on('end', function() {
+            try {
+                var parsed = JSON.parse(body);
+            } catch (err) {
+                console.error('Unable to parse response as JSON', err);
+                return cb(err);
+            }
+
+            // pass the relevant data back to the callback
+            cb(
+                parsed.objects
+               );
+        });
+    }).on('error', function(err) {
+        // handle errors with the request itself
+        console.error('Error with the request:', err.message);
+        cb(err);
+    });
+
+}
+
+function writeData (data, allGood){     
+
+// couple of visual checks if all looking good before writing to db
+console.log('writing');
+console.log(typeof data);
+console.log(data);
+
+db.collection('zakazky').insert(data, function(error, record){
+if (error) throw error;
+console.log("data saved");
+
+});
+}
+
+function allGood(){console.log('all done');}
+
+getData(writeData);
+
+// ---------------------
+module.exports = router;
