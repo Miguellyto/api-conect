@@ -54,14 +54,43 @@ const request = require('request');
 };
 ///------------------------------------------------------
 
-//  Lista todos os order:
+//  Lista todos os orders:
+exports.listAllOrders = async (req, res) => {
+  const options = {
+  method: 'GET',
+  // url: 'https://jsonplaceholder.typicode.com/posts/',
+  url: 'http://jsonplaceholder.typicode.com/users',
+  headers: {
+    Accept: 'application/json',
+    Authorization: 'Bearer {ACCESS_TOKEN}',
+    'Content-Type': 'application/json'
+  }
+};
+request(options, (error, response, body) => {
+  if (error) throw new Error(error);
+
+  // console.log(req.body);
+  res.json(body);
+  // res.status(200).send(body);
+  
+  // res.json({
+  //   message: '',
+  //   body: {
+  //     order: { body }
+  //   },
+  // });
+
+});
+};
+
+/* //  Lista todos os Pedidos:
 exports.listAllOrders = async (req, res) => {
   const response = await db.query(
-    'SELECT * FROM orders ORDER BY id_order ASC',
-    //'SELECT * FROM order ORDER BY nome DESC',
+    'SELECT * FROM pedidos ORDER BY sku ASC',
+    //'SELECT * FROM pedidos ORDER BY nome DESC',
   );
   res.status(200).send(response.rows);
-};
+}; */
 
 // cria um novo Pedido:
       // exports.createOrder = async (req, res) => {
@@ -88,7 +117,16 @@ exports.listAllOrders = async (req, res) => {
       //   );
       //   res.status(200).send(response.rows);
       // };
-  
+
+//  Lista todos os Pedidos:
+      // exports.listAllOrders = async (req, res) => {
+      //   const response = await db.query(
+      //     'SELECT * FROM pedidos ORDER BY sku ASC',
+      //      //'SELECT * FROM pedidos ORDER BY nome DESC',
+      //   );
+      //   res.status(200).send(response.rows);
+      // };
+
 //  Atualiza um Pedido pelo Id: --Rota apenas para testes
       //   exports.updateOrderById = async (req, res) => {
       //     const id_order = parseInt(req.params.id);
