@@ -1,0 +1,403 @@
+{
+    "Order": {
+      "tags": {
+        "has_invoice_key": null,
+        "has_invoice_xml": null,
+        "has_invoice_pdf": null,
+        "has_payment_form": null,
+        "has_track": null,
+        "has_track_url": null,
+        "has_label": null
+      },
+      "commission": {
+        "fixed": null,
+        "tax": null,
+        "total_charged": null,
+        "comment": null
+      },
+      "status_history": [],
+      "substatus_history": [],
+      "log_history": [],
+      "log_permanent": [],
+      "payments": [
+        {
+          "payment_type": "credit",
+          "payment_method": "Nome do método como enviado pelo canal de venda",
+          "payment_installments": "3",
+          "payment_total": 100,
+          "payment_quota": 30,
+          "payment_interest": 3,
+          "payment_additional_info": null,
+          "external": null,
+          "id": "6042121bb71e3422dafd2404"
+        }
+      ],
+      "items": [
+        {
+          "commission": {
+            "fixed": 4,
+            "tax": 2,
+            "total_charged": 10,
+            "comment": null
+          },
+          "variation": {
+            "attributes": [],
+            "id": null,
+            "name": null,
+            "external": null,
+            "sku": null,
+            "ean": null,
+            "photo_url": null
+          },
+          "quantity": 1, //SELECT quantidade FROM PEDIDO;
+          "sku": "486078", //SELECT chave FROM PEDIDO;
+          "price": 10, //SELECT custo FROM MOVDEPOS; ou //SELECT fator FROM FATOR;
+          "total": 10, //SELECT total FROM PEDIDO;
+          "name": "PRODUTO XYZ", //SELECT recurso FROM PEDIDO;
+          "supplier_id": "136", //SELECT chave FROM PEDIDO;
+          "original_sku": "486078", //SELECT chave FROM PEDIDO;
+          "photo_url": "https://s3-sa-east-1.amazonaws.com/pluggto/129/129_043bffbd-6c7f-4ad4-9624-935167a90ce9.jpg",
+          "id": null,
+          "location": null,
+          "discount": null,
+          "external": null,
+          "stock_code": null,
+          "price_code": null,
+          "shipping_cost": null
+        }
+      ],
+  
+  
+      "shipments": [], //Remessas
+      "receiver_name": "Luizo", //Nome do Recebedor
+      "receiver_lastname": "Santos",
+      "receiver_address_number": "440",
+      "receiver_address": "Rua do Bosque",
+      "receiver_address_complement": "Ap 22",
+      "receiver_address_reference": "Prox a padaria",
+      "receiver_city": "São Paulo",
+      "receiver_state": "São Paulo",
+      "receiver_email": "teste@teste.com.br",
+      "receiver_zipcode": "4457-115",
+      "receiver_phone": "119911-22111",
+      "receiver_phone2_area": "21",
+      "receiver_phone2": "9911-22112",
+      "receiver_neighborhood": "Barra funda",
+      "receiver_phone_area": "",
+
+      "payer_name": "Luizo", //Nome do pagador
+      "payer_lastname": "Santos",
+      "payer_address": "Rua do Bosque",
+      "payer_address_number": "440",
+      "payer_address_complement": "Ap 22-Prox a padaria",
+      "payer_additional_info": "Prox a padaria",
+      "payer_neighborhood": "Mooca",
+      "payer_city": "São Paulo",
+      "payer_state": "São Paulo",
+      "payer_zipcode": "4457-115",
+      "payer_phone_area": "",
+      "payer_phone": "112233-1111",
+      "payer_phone2_area": "21",
+      "payer_phone2": "2233-1111",
+      "payer_cpf": "000.000.000-00",
+      "payer_tax_id": "000.000.000-00",
+      "payer_cnpj": "22.211.221/0001-21",
+      "payer_document": "49.774.119-2",
+      "payer_razao_social": "EMPRESA LTDA",
+      "payer_company_name": "EMPRESA LTDA",
+      "payer_country": "BR",
+      "payer_email": "999999992016@mail.com.br",
+
+      "total_paid": 18,
+      "shipping": 10.21, //Envio
+      "subtotal": 7.789999999999999,
+      "discount": 81.79,
+      "total": 18,
+      "user_client_id": "129",
+      "status": "pending",
+      "original_id": "id_2_no_meu_sistema_teste_fix_5",
+      "expected_send_date": "2016-11-05T00:00:00.000Z", //data de envio esperada
+      "expected_delivery_date": "2016-11-05T00:00:00.000Z", //data prevista de entrega
+      "receiver_schedule_date": "2016-11-05T00:00:00.000Z",
+      "auto_reserve": true,
+      "user_id": "129",
+      "created": "2021-03-05T11:12:27.771Z",
+      "created_by": "NTJhYTI3MTc4MDYyZjNk",
+      "ack": false,
+      "modified": "2021-03-09T18:22:24.198Z",
+      "modified_by": "a106d72f997e5d3c8a08ce5c32e849b7",
+      "timestamp": 1615314144,
+      "discount_description": "Adicionado desconto de $81.78999999999999 referente ao valor de kits do pedido x valor de venda dos produtos que compõe o kit se vendido separadamente.",
+      "order_id": 9151515193945684,
+      "external": {
+        "3be1315b01008eb77b5972693db69cd0": "100000532"
+      },
+
+      "receiver_additional_info": "Ap 22-Prox a padaria", //informações adicionais do receptor
+      "receiver_country": "BR", 
+      "input_service": null,
+      "sub_status": null,
+      "channel": null,
+      "channel_account": null,
+      "currency": "BRL", //Moeda
+      "receiver_cpf": null,
+      "receiver_schedule_period": "morning", //Agendamento de entrega
+      "delivery_type": "standard", //Tipo de entrega
+      "payer_fullname": null,
+      "payer_gender": "male", //Gênero do pagador
+      "payer_address_reference": null,
+      "payer_schedule_date": null,
+      "payer_schedule_period": null,
+      "payer_ie": null,
+      "payer_im": null,
+      "deleted": null,
+      "comission": null,
+      "sale_intermediary": null,
+      "payment_intermediary": null,
+      "intermediary_seller_id": null,
+      "invoicing_accepted": null,
+      "invoicing_accepted_date": null,
+      "shipping_accepted": null,
+      "shipping_accepted_date": null,
+      "delivery_accepted": null,
+      "delivery_accepted_date": null,
+      "invoicing_informed": null,
+      "invoicing_informed_date": null,
+      "shipping_informed": null,
+      "shipping_informed_date": null,
+      "delivery_informed": null,
+      "delivery_informed_date": null,
+      "sla_ship": null,
+      "sla_delivery": null,
+      "label_printed": null,
+      "marked_as_delivered": null,
+      "marked_as_shipped": null,
+      "marked_as_invoiced": null,
+      "id": "6042121bb71e3422dafd2400"
+    }
+  }
+
+  ///////////////////////////QUERYS DO INO////////////////////////////////////////////////////////////////
+
+  --Listar os Bancos de Dados
+/* SELECT datname FROM pg_database; */
+
+--Exibindo tabelas do Banco de Dados
+/* SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'; */
+
+--Selecionando Exibe os campos da tabela
+ /* Select * from ILOG where 1 = 2; */
+
+--Selecionar apenas o primeiro registro da tabela
+/*  Select * from ILOG LIMIT 2; */
+
+/* Select * from integracao LIMIT 2; */
+
+
+--Visualizando as colunas de uma tabela
+/* SELECT column_name FROM information_schema.columns WHERE table_name = 'recurso'; */
+
+--Ver detalhes das colunas de uma tabela
+/* SELECT * FROM information_schema.columns WHERE table_name ='recurso'; */
+
+ /* Select * from PEDIDO where LIKE 'FOGAO 4B. ESMALTEC BALI CRISTAL BR' */
+
+---TABELA RECURSO
+select * from RECURSO
+WHERE NOME LIKE '%ESMALTEC%'
+LIMIT 10
+
+select 
+CHAVE, 
+CODIGO, 
+CLASSE, 
+NOME, 
+EAN, 
+FABRICANTE, 
+IMAGEM, 
+MARCA, 
+PRAZOGARANTIA, 
+DESCRICAOGENERICA 
+from RECURSO WHERE NOME LIKE '%ESMALTEC%';
+
+/* ihour, idate --from PEDIDO LIMIT 2;*/
+
+SELECT 
+chave, 
+ean,
+nome, 
+codigo,
+classe,   
+fabricante, 
+imagem, 
+marca, 
+prazogarantia,
+descricaogenerica, 
+yecommerceskuid, 
+yecommerceid,
+yecommerceprodutopaiid,
+yecommercenome,
+yecommercedescricao,
+yecommercecategoria,
+yecommerceapelido
+from RECURSO WHERE NOME LIKE '%ESMALTEC%';
+
+---Tabela VINCULA onde costa o "SALDO DO RECURSO"=Quantidade "ESTOQUE"
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+VALOR,
+LOCESCRITU
+from VINCULA WHERE NOME LIKE '%ESMALTEC%';
+
+---Tabela FATOR, onde consta o FATOR=Preços dos RECURSOS=Produtos
+SELECT * FROM FATOR LIMIT 10;
+SELECT fator FROM FATOR;
+
+/* SELECT
+icreatedat,
+iupdatedat
+FROM CLASSE
+LIMIT 10; */
+
+SELECT
+icreatedat,
+iupdatedat,
+icreation,
+icreationhour,
+ilastmodified,
+ilastmodifiedhour
+FROM iVfs
+LIMIT 10;
+
+SELECT table_name 
+FROM information_schema.tables 
+WHERE table_schema = 'public';
+
+---FATOR, CLASSE, Fatoresvenda
+Select * from tabela where chave = -1898145931;
+---1897048799, -1894333884, -1897148410
+
+---Query imagem 
+Select iKey, iVersion, iFieldNames, iBeforeValues
+From iLog
+Where iType = -1898145931 /* Registro Removido */;
+
+Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIGO as CODIGORASTREIO, e.CHAVE as CHAVE_EVENTO
+        From PEDIDO p
+        join INTEGRACAO i on i.YIDPEDIDO = p.YIDPEDIDO
+        left outer join EVENTO e on e.CRPEDIDO = p.CHCRIACAO and e.CLASSE = -1894804814 /* Código de Rastreamento */
+        Where i.YAVISOFATURAMENTO is not null
+            and p.OPERACAOCANCELADA is null
+            and p.CHPEDBAIXA is not null
+            and p.APROVACAO is not null
+            and p.STATUSNFE = -1894641856 /* Enviada com Sucesso */
+        " + whereExpress + "
+---
+        -- select
+        --     YDATAINCLUSAO,
+        --     MAX(YHORAINCLUSAO) as HORAINCLUSAO
+        -- from
+        --     INTEGRACAO
+        -- where
+        --     CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+        --     and YDATAINCLUSAO in (
+        --         select
+        --             MAX(YDATAINCLUSAO) as DATAINCLUSAO
+        --         from
+        --             INTEGRACAO
+        --         where
+        --             CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+        --     )
+        -- group by YDATAINCLUSAO";
+
+---
+--TABELA INTEGRACAO
+/* select
+CHAVE,
+VERSAOPEDIDO,
+DATAGRAVACAOPEDIDO,
+HORAGRAVACAOPEDIDO,
+DADOSPEDIDO,
+YAVISOFATURAMENTO,
+YAVISOFATURAMENTOH,
+YAVISOFATURAMENTOUSUARIO,
+YDADOSPAGAMENTO,
+YSITUACAOPAGAMENTO,
+YDADOSPEDIDO,
+YSTATUS,
+YIDPEDIDO,
+YEMAIL
+from integracao LIMIT 2; */
+
+ Select * from PEDIDO where 1 = 2;
+  Select * from PEDIDO LIMIT 2;
+
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+--CUSTO //Preço
+from MOVDEPOS
+LIMIT 10;
+
+--TABELA PEDIDO
+select
+--CHAVE,
+CHCRIACAO,
+--RECURSO,
+PEDIDO,
+UNITARIO,
+--QUANTIDADE,
+EMISSAOPED,
+EMISSAOPEDH,
+DATAENTREGA,
+EMISSAOUTC,
+EMISSAOHUTC,
+RASTREIO,
+RASTREIOCOMP,
+TIPOFRETE,
+FRETE,
+NUMEROPEDIDOCOMPRA,
+ITEMPEDIDOCOMPRA,
+YIDPEDIDO,
+MOEDA,
+TOTAL
+from PEDIDO LIMIT 2;
+
+---Produto OK---
+select 
+    a.chave, 
+    a.ean,
+    '' as ncm,
+    a.nome, 
+    a.codigo,
+    'quantidade' as quantidade,
+    'preço especial' as preço_especial,
+    b.fator as preço,
+    a.descricaogenerica,
+    a.marca, 
+    'custo' as custo,
+    a.prazogarantia,
+    'observacao' as observacao,
+    'link produto' as link_produto,
+    'acessivel' as acessivel,
+    a.classe,   
+    'tempo manuseio' as tempo_manuseio,
+    'tempo fabricacao' as tempo_fabricacao,
+    a.comprimento as comprimento,
+    a.largura as largura,
+    a.altura as altura,
+    a.pesbruunid as peso,
+    'atributos' as atributos,
+    'fotos' as fotos,
+    'tabelas de preco' as tabela_preco,
+    'deposito' as deposito,
+    'variacoes' as variacoes
+    from RECURSO a 
+    join fator b
+    on a.chave = b.recursoorig
+    and b.tabfator = 462894
+    and b.fim is null
+where codigo = '1056'

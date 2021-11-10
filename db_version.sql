@@ -38,9 +38,32 @@ CREATE TABLE titles (
 	id SERIAL PRIMARY KEY NOT NULL,
 	title NUMERIC(11) NOT NULL
 );
-
+---
 ALTER TABLE titles ALTER COLUMN title TYPE VARCHAR(500); 
+
+ALTER TABLE titles
+ADD COLUMN createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE titles ADD COLUMN updatedAt TIMESTAMP;
+
+-------------Criando Gatilho para a coluna updatedAt no Postgres---------------
+
+/* 
+CREATE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
+    BEGIN
+        NEW.updatedAt := current_timestamp; ---//pode ser  NEW.updated
+        RETURN NEW;
+    END;
+$update_timestamp$ LANGUAGE plpgsql;
+
+----
+CREATE TRIGGER update_timestamp BEFORE INSERT OR UPDATE ON products --//Inserir/Atualizar
+--CREATE TRIGGER update_timestamp BEFORE UPDATE ON products --//Apenas quando Atualizar
+    FOR EACH ROW EXECUTE PROCEDURE update_timestamp(); 
+
+ */
 
 SELECT * FROM titles;
 SELECT * FROM orders;
 SELECT * FROM products;
+

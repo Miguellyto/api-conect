@@ -5,7 +5,13 @@ const orderController = require('../controllers/order.controller');
 router.get('/order/:id', orderController.findOrderById);
 
 //  Lista todos os pedido: (GET): localhost:4000/api/order
-router.get('/order', orderController.listAllOrders);
+router.get('/orders', orderController.listAllOrders);
+
+//  Lista todos os pedido: (GET): localhost:4000/api/order
+router.get('/orders_bd', orderController.listAllOrders_bd);
+
+//  Seleciona pedido pelo Id: (GET): localhost:4000/api/order/:id
+router.get('/order_bd/:id', orderController.findOrderById_bd);
 
 // ==> Rota responsável por criar um novo pedido: (POST): localhost:4000/api/order
 // router.post('/order', orderController.createOrder);

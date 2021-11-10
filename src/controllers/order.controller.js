@@ -31,12 +31,13 @@ const request = require('request');
               const data = JSON.parse(body);
               const title = data.title || '';
               const id = data.id || '';
-
+              
               // Conn Postgresql
               (async () => {
 
                 const { rows } = await db.query('INSERT INTO titles(id, title) values($1, $2)', 
                 [id, title])
+                // [id, title, createdAt, createdAt])
 
                     res.json({
                     message: 'Pedido Criado com Successo',
@@ -46,7 +47,7 @@ const request = require('request');
                   });
                             
               })().catch(err =>
-                setImmediate(() => {throw new err(err)})
+                setImmediate(() => {throw err})
               )
           } 
       }
@@ -54,7 +55,7 @@ const request = require('request');
 };
 ///------------------------------------------------------
 
-//  Lista todos os orders:
+//  Lista todos os orders EndPoint:
 exports.listAllOrders = async (req, res) => {
   const options = {
   method: 'GET',
@@ -70,8 +71,8 @@ request(options, (error, response, body) => {
   if (error) throw new Error(error);
 
   // console.log(req.body);
-  res.json(body);
-  // res.status(200).send(body);
+  // res.json(body);
+  res.status(200).send(body);
   
   // res.json({
   //   message: '',
@@ -83,14 +84,24 @@ request(options, (error, response, body) => {
 });
 };
 
-/* //  Lista todos os Pedidos:
-exports.listAllOrders = async (req, res) => {
+//  Lista todos os orders BD:
+exports.listAllOrders_bd = async (req, res) => {
   const response = await db.query(
-    'SELECT * FROM pedidos ORDER BY sku ASC',
-    //'SELECT * FROM pedidos ORDER BY nome DESC',
+    'SELECT * FROM titles ORDER BY id ASC',
+    //'SELECT * FROM titles ORDER BY title DESC',
   );
   res.status(200).send(response.rows);
-}; */
+};
+
+//  Seleciona order pelo Id BD:
+      exports.findOrderById_bd = async (req, res) => {
+        const id = parseInt(req.params.id);
+        const response = await db.query(
+          'SELECT * FROM titles WHERE id = $1',
+          [id],
+        );
+        res.status(200).send(response.rows);
+      };
 
 // cria um novo Pedido:
       // exports.createOrder = async (req, res) => {
