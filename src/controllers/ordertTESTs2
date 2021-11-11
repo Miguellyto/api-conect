@@ -32,7 +32,7 @@
           "id": "6042121bb71e3422dafd2404"
         }
       ],
-      "items": [
+      "items": [ //select ITEMPEDIDOCOMPRA from PEDIDO
         {
           "commission": {
             "fixed": 4,
@@ -42,20 +42,20 @@
           },
           "variation": {
             "attributes": [],
-            "id": null,
-            "name": null,
+            "id": null, //SELECT chave FROM PEDIDO
+            "name": null,//SELECT recurso FROM PEDIDO
             "external": null,
-            "sku": null,
-            "ean": null,
+            "sku": null, //SELECT chave FROM PEDIDO
+            "ean": null, //SELECT ean FROM RECURSO
             "photo_url": null
           },
-          "quantity": 1, //SELECT quantidade FROM PEDIDO;
-          "sku": "486078", //SELECT chave FROM PEDIDO;
-          "price": 10, //SELECT custo FROM MOVDEPOS; ou //SELECT fator FROM FATOR;
-          "total": 10, //SELECT total FROM PEDIDO;
-          "name": "PRODUTO XYZ", //SELECT recurso FROM PEDIDO;
-          "supplier_id": "136", //SELECT chave FROM PEDIDO;
-          "original_sku": "486078", //SELECT chave FROM PEDIDO;
+          "quantity": 1, //SELECT quantidade FROM PEDIDO
+          "sku": "486078", //SELECT chave FROM PEDIDO
+          "price": 10, //SELECT custo FROM MOVDEPOS ou //SELECT fator FROM FATOR
+          "total": 10, //SELECT total FROM PEDIDO
+          "name": "PRODUTO XYZ", //SELECT recurso FROM PEDIDO
+          "supplier_id": "136", //SELECT chave FROM PEDIDO
+          "original_sku": "486078", //SELECT chave FROM PEDIDO
           "photo_url": "https://s3-sa-east-1.amazonaws.com/pluggto/129/129_043bffbd-6c7f-4ad4-9624-935167a90ce9.jpg",
           "id": null,
           "location": null,
@@ -69,16 +69,16 @@
   
   
       "shipments": [], //Remessas
-      "receiver_name": "Luizo", //Nome do Recebedor
+      "receiver_name": "Luizo", //select PESSOA from PEDIDO - //Nome do Recebedor
       "receiver_lastname": "Santos",
-      "receiver_address_number": "440",
-      "receiver_address": "Rua do Bosque",
-      "receiver_address_complement": "Ap 22",
-      "receiver_address_reference": "Prox a padaria",
-      "receiver_city": "São Paulo",
-      "receiver_state": "São Paulo",
-      "receiver_email": "teste@teste.com.br",
-      "receiver_zipcode": "4457-115",
+      "receiver_address_number": "440", //select NUMEROPESSOAOP from PEDIDO
+      "receiver_address": "Rua do Bosque", //select LOGRADOUROPESSOAOP from PEDIDO
+      "receiver_address_complement": "Ap 22", //select COMPLEMENTOPESSOAOP from PEDIDO
+      "receiver_address_reference": "Prox a padaria",//select PONTOREFERPESSOAOP from PEDIDO
+      "receiver_city": "São Paulo", //select LOCALIDADEPESSOAOP from PEDIDO
+      "receiver_state": "São Paulo", //select UFPESSOAOP from PEDIDO 
+      "receiver_email": "teste@teste.com.br", //select YEMAIL from INTEGRACAO // Select EMAIL from tabela
+      "receiver_zipcode": "4457-115", //select CEPPESSOAOP from PEDIDO
       "receiver_phone": "119911-22111",
       "receiver_phone2_area": "21",
       "receiver_phone2": "9911-22112",
@@ -105,30 +105,30 @@
       "payer_document": "49.774.119-2",
       "payer_razao_social": "EMPRESA LTDA",
       "payer_company_name": "EMPRESA LTDA",
-      "payer_country": "BR",
+      "payer_country": "BR", //select PAISLOCESCRITUOP from PEDIDO
       "payer_email": "999999992016@mail.com.br",
 
-      "total_paid": 18,
-      "shipping": 10.21, //Envio
-      "subtotal": 7.789999999999999,
-      "discount": 81.79,
-      "total": 18,
+      "total_paid": 18, //select TOTAL/TOTALDANOTA from PEDIDO
+      "shipping": 10.21, //SELECT frete FROM PEDIDO - //Envio
+      "subtotal": 7.789999999999999, //select SUBTOTAL from PEDIDO
+      "discount": 81.79, //select DESCONTO from PEDIDO
+      "total": 18, //select TOTALDANOTA/TOTALLIQUIDO from PEDIDO
       "user_client_id": "129",
-      "status": "pending",
-      "original_id": "id_2_no_meu_sistema_teste_fix_5",
+      "status": "pending", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
+      "original_id": "id_2_no_meu_sistema_teste_fix_5", //select CHAVE from INTEGRACAO //select CHAVE/CHCRIACAO/CRPEDIDO from PEDIDO
       "expected_send_date": "2016-11-05T00:00:00.000Z", //data de envio esperada
-      "expected_delivery_date": "2016-11-05T00:00:00.000Z", //data prevista de entrega
+      "expected_delivery_date": "2016-11-05T00:00:00.000Z", //SELECT dataentrega FROM PEDIDO - //data prevista de entrega
       "receiver_schedule_date": "2016-11-05T00:00:00.000Z",
       "auto_reserve": true,
       "user_id": "129",
-      "created": "2021-03-05T11:12:27.771Z",
+      "created": "2021-03-05T11:12:27.771Z", //SELECT emissaoped, emissaopedh FROM PEDIDO
       "created_by": "NTJhYTI3MTc4MDYyZjNk",
       "ack": false,
       "modified": "2021-03-09T18:22:24.198Z",
       "modified_by": "a106d72f997e5d3c8a08ce5c32e849b7",
       "timestamp": 1615314144,
       "discount_description": "Adicionado desconto de $81.78999999999999 referente ao valor de kits do pedido x valor de venda dos produtos que compõe o kit se vendido separadamente.",
-      "order_id": 9151515193945684,
+      "order_id": 9151515193945684, //SELECT numeropedidocompra FROM PEDIDO
       "external": {
         "3be1315b01008eb77b5972693db69cd0": "100000532"
       },
@@ -284,6 +284,8 @@ Select iKey, iVersion, iFieldNames, iBeforeValues
 From iLog
 Where iType = -1898145931 /* Registro Removido */;
 
+
+--- Código de Rastreamento.ip (-1894804815) --- 
 Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIGO as CODIGORASTREIO, e.CHAVE as CHAVE_EVENTO
         From PEDIDO p
         join INTEGRACAO i on i.YIDPEDIDO = p.YIDPEDIDO
@@ -294,25 +296,133 @@ Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIG
             and p.APROVACAO is not null
             and p.STATUSNFE = -1894641856 /* Enviada com Sucesso */
         " + whereExpress + "
----
-        -- select
-        --     YDATAINCLUSAO,
-        --     MAX(YHORAINCLUSAO) as HORAINCLUSAO
-        -- from
-        --     INTEGRACAO
-        -- where
-        --     CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
-        --     and YDATAINCLUSAO in (
-        --         select
-        --             MAX(YDATAINCLUSAO) as DATAINCLUSAO
-        --         from
-        --             INTEGRACAO
-        --         where
-        --             CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
-        --     )
-        -- group by YDATAINCLUSAO";
 
----
+--- PrincipiaPedidoService.ijs (-1894804822) ---
+        select
+            YDATAINCLUSAO,
+            MAX(YHORAINCLUSAO) as HORAINCLUSAO
+        from
+            INTEGRACAO
+        where
+            CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+            and YDATAINCLUSAO in (
+                select
+                    MAX(YDATAINCLUSAO) as DATAINCLUSAO
+                from
+                    INTEGRACAO
+                where
+                    CLASSE = " + ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO + "
+            )
+        group by YDATAINCLUSAO;
+
+---ECommercePedidoServiceCC.ijs (-1894804981)---
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeCriacao = function( ids ){
+
+    var query = "
+        select i.*
+        from INTEGRACAO i
+        where i.YLIBERACAOATENDIMENTO is not null
+            and i.YENCERRAMENTO is null
+            and not exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO=i.YIDPEDIDO
+                    and p.CHPEDBAIXA is null
+                    and p.CHDEVOLUC is null
+            ) " +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeNotificacaoFaturamento = function( ids ){
+    var integracao = database.query("
+        select i.*
+        from INTEGRACAO i
+        where i.YAVISOFATURAMENTO is null
+            and exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO=i.YIDPEDIDO
+                    and p.CHPEDBAIXA is null
+                    and p.CHDEVOLUC is null
+                    and exists (
+                        select 1
+                        from PEDIDO bx
+                        where bx.CHPEDBAIXA=p.CHAVE
+                            and bx.OPERACAOCANCELADA is null
+                            and bx.STATUSNFE = " + ECommerceConstantesCC.statusNfe.EMITIDA + "
+                    )
+            ) " +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+    );
+    integracao.logChanges = true;
+
+    return integracao;
+};
+
+---ECommercePedidoServiceCC.prototype._pegarPedidosPendentesDeNotificacaoCancelamento = function( ids ){
+    var integracao = database.query("
+        select i.yidpedido
+        from INTEGRACAO i
+        where i.YCANCELAMENTO is null
+            and exists (
+                select 1
+                from PEDIDO p
+                where p.YIDPEDIDO = i.YIDPEDIDO
+                    and ( p.cancelamensaldo is not null or
+                          exists (
+                                select 1
+                                from PEDIDO bx
+                                where bx.CHPEDBAIXA = p.CHAVE
+                                    and bx.OPERACAOCANCELADA is not null
+                                    and bx.STATUSNFE = " + ECommerceConstantesCC.statusNfe.CANCELADA + "
+                                ))
+                )" +
+            queryUtilities.clauseWhereOfKeys("and", "i.CLASSE", classes.getChildren( ECommerceConstantesCC.classes.INTEGRACAO_PEDIDO )) +
+            queryUtilities.clauseWhereOfKeys("and", "i.YIDPEDIDO", ids)
+    );
+    integracao.logChanges = true;
+
+    return integracao;
+};
+---ECommercePedidoServiceCC.prototype._pegarEventosDeCodigoRastreamentoPendentes = function(){
+    var eventos = database.query("
+        select e.*
+        from EVENTO e
+        where e.CLASSE = -1894804814 /* Código de Rastreamento */
+            and DATA is null
+    ");
+    eventos.logChanges = true;
+
+    return eventos;
+};
+
+---ECommercePedidoServiceCC.prototype._pegarNotaFiscais = function( idsPedidos ){
+    if( !idsPedidos ){
+        throw new Error("Informe os IDs dos pedidos!");
+    }
+
+    if( typeof idsPedidos == "string" ){
+        idsPedidos = this.converter.preparaChaveParaConsultaDadosIntegracao( idsPedidos.toString().split(",") );
+    }
+
+    var notasFiscais = database.query("
+        select distinct bx.CHAVE, bx.NUMERO, bx.CHACESSONFE, bx.EMISSAO, bx.EMISSAOH, bx.SERIESUBS, bx.RECURSO, bx.UNITARIO, bx.QUANTIDADE, bx.TOTAL, p.YIDPEDIDO
+        from PEDIDO bx
+            left outer join PEDIDO p on p.CHAVE=bx.CHPEDBAIXA
+        where bx.CHPEDBAIXA is not null
+            and bx.OPERACAOCANCELADA is null
+            and bx.STATUSNFE = -1894641856 /* Enviada com Sucesso */
+            and p.YIDPEDIDO in ( " + idsPedidos.join(', ') + ")"
+    );
+
+    return {
+        cabecalhos: notasFiscais.sum("NUMERO;EMISSAO;EMISSAOH;SERIESUBS;YIDPEDIDO;CHACESSONFE", "TOTAL;QUANTIDADE"),
+        itens: notasFiscais
+    }
+};
+
+
 --TABELA INTEGRACAO
 /* select
 CHAVE,
@@ -331,6 +441,56 @@ YIDPEDIDO,
 YEMAIL
 from integracao LIMIT 2; */
 
+--Regras de Pagamentos--
+SELECT 
+CODIGO,
+NOME,
+TIPO,
+CHBANDEIRA,
+REDEAUTORIZADORA,
+CONDNEGOCIACAO,
+YABSORVEPARCELAECOMMERCE,
+YCONSIDERAFRETETITULO,
+YCRIAPEDIDOCOMTITULOPENDENTE
+FROM tabela where 1 = 2;
+
+---MAIS CAMPOS DA TABELA "tabela"
+SELECT 
+CHAVE,
+CODIGO,
+COMISSAOP,
+QUANTIDADE,
+QUANTIDADE01,
+RECURSO,
+DEPOSITO,
+FABRICANTE,
+TEMZONACIDADE,
+UF,
+VALOR,
+CONTA,
+LOCALIDADE,
+ALTURA,
+PESO,
+DIASENTREGA,
+TOLEDMAIS,
+TOLEDMENOS,
+GARANTIA,
+MARCA,
+COR,
+FATOR,
+CLIENTE,
+PESSOA,
+NOME,
+USUARIO,
+EMAIL,
+CADASTRADOR,
+STATUS,
+SITUACAO,
+TIPOPESSOA,
+LARGURA,
+COMPRIMENTO,
+FROM tabela where 1 = 2;
+
  Select * from PEDIDO where 1 = 2;
   Select * from PEDIDO LIMIT 2;
 
@@ -338,33 +498,122 @@ select
 CHAVE,
 RECURSO,
 QUANTIDADE,
---CUSTO //Preço
+CUSTO --Preço
 from MOVDEPOS
 LIMIT 10;
 
 --TABELA PEDIDO
 select
---CHAVE,
+CHAVE,
 CHCRIACAO,
---RECURSO,
+CRPEDIDO,
+RECURSO,
 PEDIDO,
+ITEM,
+USUARIOPED,
+USUARIO,
+COMPRADOR,
+DISPONIVELPED,
 UNITARIO,
---QUANTIDADE,
+DESCITEMKIT,
+ACRESITEMKIT,
+COMISSVALOR1,
+COMISSVALORPED1,
+COMISSVALORTIT1,
+COMISSFATOR1,
+QUANTIDADE,
 EMISSAOPED,
 EMISSAOPEDH,
-DATAENTREGA,
+HORASISTEMAEMISSOR,
+DATASISTEMAEMISSOR
+HORACANCSISTEMAEMISSOR,
+EMISSAODOCH,
+EMISSAODOC,
 EMISSAOUTC,
 EMISSAOHUTC,
+DATAEMBARQUE,
+DATAEMBARQUEH,
+DATAENTREGA,
 RASTREIO,
 RASTREIOCOMP,
 TIPOFRETE,
 FRETE,
+TIPOFRETE,
+TRANSPORTA,
+DESCITEM,
+DESCONTO,
+ORIGEM,
+SAIDAORIGEM,
+DESTINO,
+CHEGADADESTINO,
+ENTREGA,
+VOLQDETRANSP,
 NUMEROPEDIDOCOMPRA,
+PEDLOCESCTRANSF,
 ITEMPEDIDOCOMPRA,
+PRAZOGARANTIAM
 YIDPEDIDO,
 MOEDA,
-TOTAL
+NUMEROSERIE,
+SERIESUBS,
+NUMERO,
+TIPO,
+EMISSAO,
+PESSOA,
+LOCENTREGA,
+TOTAL,
+SUBTOTAL,
+TOTALDANOTA,
+TOTALLIQUIDO,
+TOTALBRUTO
 from PEDIDO LIMIT 2;
+
+---PESSOA PEDIDO
+SELECT
+PESSOA,
+PESSOAOP
+LOGRADOUROPESSOAOP,
+NUMEROPESSOAOP,
+COMPLEMENTOPESSOAOP,
+PONTOREFERPESSOAOP,
+LOCALIDADEPESSOAOP,
+CEPPESSOAOP,
+UFPESSOAOP,
+PAISPESSOAOP,
+TIPOLOGRADOUROPESSOAOP,
+SUBLOCALIDADEPESSOAOP,
+ZONACIDADEPESSOAOP
+FROM pedido;
+
+---ESCRITUOP PEDIDO
+select
+NUMEROLOCESCRITUOP,
+LOGRADOUROLOCESCRITUOP,
+COMPLEMENTOLOCESCRITUOP,
+PONTOREFERLOCESCRITUOP,
+LOCALIDADELOCESCRITUOP,
+UFLOCESCRITUOP,
+CEPLOCESCRITUOP 
+from PEDIDO;
+
+---ENTIDADE
+SELECT
+ENTNOME,
+ENTENDERECO,
+ENTFONE,
+ENTPONTOREFER,
+ENTBAIRRO,
+ENTUF,
+ENTCEP,
+ENTCIDADE
+ENTLOCALIDADE,
+ENTLOGRADOURO,
+ENTCOMPLEMENTO,
+ENTNUMERO,
+ENTPAIS,
+ENTTIPOLOGRADOURO,
+ENTSUBLOCALIDADE
+FROM pedido;
 
 ---Produto OK---
 select 
