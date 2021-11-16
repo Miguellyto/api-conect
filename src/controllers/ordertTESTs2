@@ -21,9 +21,9 @@
       "log_permanent": [],
       "payments": [
         {
-          "payment_type": "credit",
+          "payment_type": "credit", // select TIPO from TABELA
           "payment_method": "Nome do método como enviado pelo canal de venda",
-          "payment_installments": "3",
+          "payment_installments": "3", DIVIDIR
           "payment_total": 100,
           "payment_quota": 30,
           "payment_interest": 3,
@@ -57,13 +57,13 @@
           "supplier_id": "136", //SELECT chave FROM PEDIDO
           "original_sku": "486078", //SELECT chave FROM PEDIDO
           "photo_url": "https://s3-sa-east-1.amazonaws.com/pluggto/129/129_043bffbd-6c7f-4ad4-9624-935167a90ce9.jpg",
-          "id": null,
-          "location": null,
-          "discount": null,
+          "id": null, //SELECT chave FROM PEDIDO
+          "location": null, //SELECT DEPOSITO FROM MOVDEPOS
+          "discount": null, //SELECT DESCONTO FROM PEDIDO 
           "external": null,
-          "stock_code": null,
-          "price_code": null,
-          "shipping_cost": null
+          "stock_code": null, //SELECT chave FROM PEDIDO
+          "price_code": null, //SELECT chave FROM MOVDEPOS //SELECT CHAVE FROM FATOR
+          "shipping_cost": null //SELECT frete FROM PEDIDO
         }
       ],
   
@@ -77,13 +77,13 @@
       "receiver_address_reference": "Prox a padaria",//select PONTOREFERPESSOAOP from PEDIDO
       "receiver_city": "São Paulo", //select LOCALIDADEPESSOAOP from PEDIDO
       "receiver_state": "São Paulo", //select UFPESSOAOP from PEDIDO 
-      "receiver_email": "teste@teste.com.br", //select YEMAIL from INTEGRACAO // Select EMAIL from tabela
+      "receiver_email": "teste@teste.com.br", //Select EMAILPESSOA from PEDIDO //select YEMAIL from INTEGRACAO // Select EMAIL from tabela 
       "receiver_zipcode": "4457-115", //select CEPPESSOAOP from PEDIDO
-      "receiver_phone": "119911-22111",
-      "receiver_phone2_area": "21",
-      "receiver_phone2": "9911-22112",
-      "receiver_neighborhood": "Barra funda",
-      "receiver_phone_area": "",
+      "receiver_phone": "119911-22111", //select FONE from ENTIDADE //
+      "receiver_phone2_area": "21",null,
+      "receiver_phone2": "9911-22112",null,
+      "receiver_neighborhood": "Barra funda",null,
+      "receiver_phone_area": "",null,
 
       "payer_name": "Luizo", //Nome do pagador
       "payer_lastname": "Santos",
@@ -113,15 +113,15 @@
       "subtotal": 7.789999999999999, //select SUBTOTAL from PEDIDO
       "discount": 81.79, //select DESCONTO from PEDIDO
       "total": 18, //select TOTALDANOTA/TOTALLIQUIDO from PEDIDO
-      "user_client_id": "129",
-      "status": "pending", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
+      "user_client_id": "129", //SELECT EVENTO FROM USUARIO
+      "status": "pending", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO //select STATUS from EVENTO
       "original_id": "id_2_no_meu_sistema_teste_fix_5", //select CHAVE from INTEGRACAO //select CHAVE/CHCRIACAO/CRPEDIDO from PEDIDO
       "expected_send_date": "2016-11-05T00:00:00.000Z", //data de envio esperada
       "expected_delivery_date": "2016-11-05T00:00:00.000Z", //SELECT dataentrega FROM PEDIDO - //data prevista de entrega
       "receiver_schedule_date": "2016-11-05T00:00:00.000Z",
       "auto_reserve": true,
-      "user_id": "129",
-      "created": "2021-03-05T11:12:27.771Z", //SELECT emissaoped, emissaopedh FROM PEDIDO
+      "user_id": "129",//SELECT EVENTO FROM USUARIO
+      "created": "2021-03-05T11:12:27.771Z", //select EMISSAOPED, EMISSAOPEDH from PEDIDO
       "created_by": "NTJhYTI3MTc4MDYyZjNk",
       "ack": false,
       "modified": "2021-03-09T18:22:24.198Z",
@@ -297,6 +297,58 @@ Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIG
             and p.STATUSNFE = -1894641856 /* Enviada com Sucesso */
         " + whereExpress + "
 
+--RASTREAMENTO DO PEDIDO:
+SELECT 
+PESSOA,
+CHCRIACAO,
+NUMERO, --DA NFE
+EMISSAO,
+CODIGORASTREIO
+FROM PEDIDO;
+
+{
+"status":"shipping_informed",
+"shipments":
+ [{"id":"606b87e9e7cb7f1d4d5f8d33",  //select CHCRIACAO from PEDIDO
+"shipping_company":"Correios",//SELECT TRANSPORTA FROM PEDIDO
+"shipping_method":"PAC", //select TIPOFRETE from PEDIDO
+"track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
+"track_url":"http://correios.com.br",
+"status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
+"date_shipped":"2021-02-01" //select DATAEMBARQUE from PEDIDO
+}]
+}
+
+SELECT 
+CHCRIACAO,
+TRANSPORTA,
+TIPOFRETE,
+CODIGORASTREIO/RASTREIO,
+STATUSNFE
+FROM PEDIDO;
+select YSTATUS from INTEGRACAO
+select DATAEMBARQUE from PEDIDO
+
+
+--/Configuração/Fiscais/0100 Accounting.ic
+this.camposInalteraveisDaNfe.push(
+    "TIPO",
+    "EMISSAOMOV",
+    "NUMERO",
+    "NUMEROSEQ",
+    "SERIESUBS"//,
+    //TODO: Rever uso dos campos abaixo, pois os mesmos podem ser alterados em outras situacoes, tais como cancelamento.
+    //"CHACESSONFE",
+    //"ENVIONFE",
+    //"ENVIONFEH",
+    //"PROTOCOLONFE",
+    //"STATUSNFE",
+    //"TIPOCONTINGENCIANFE",
+    //"TIPOEMISSAONFE"
+);
+
+this.declareArray("classesDeRecursosEscriturais");
+
 --- PrincipiaPedidoService.ijs (-1894804822) ---
         select
             YDATAINCLUSAO,
@@ -422,7 +474,6 @@ Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIG
     }
 };
 
-
 --TABELA INTEGRACAO
 /* select
 CHAVE,
@@ -432,11 +483,12 @@ HORAGRAVACAOPEDIDO,
 DADOSPEDIDO,
 YAVISOFATURAMENTO,
 YAVISOFATURAMENTOH,
-YAVISOFATURAMENTOUSUARIO,
+YAVISOFATURAMENTOUSUARIO, 
 YDADOSPAGAMENTO,
 YSITUACAOPAGAMENTO,
 YDADOSPEDIDO,
 YSTATUS,
+STATUS,
 YIDPEDIDO,
 YEMAIL
 from integracao LIMIT 2; */
@@ -506,9 +558,7 @@ LIMIT 10;
 select
 CHAVE,
 CHCRIACAO,
-CRPEDIDO,
 RECURSO,
-PEDIDO,
 ITEM,
 USUARIOPED,
 USUARIO,
@@ -556,10 +606,20 @@ YIDPEDIDO,
 MOEDA,
 NUMEROSERIE,
 SERIESUBS,
-NUMERO,
+
+STATUSCORRENTE, --status da NFE
+CRPEDIDO, --CHAVE DE CRIAÇÃO PEDIDO
+NUMERO, --DA NFE
+SERIE, -- DA NFE
+CFOP, -- DA NFE
+PESSOA, --CLIENTE DO PEDIDO
+PESSOAUF, --UF DO CLIENTE DA NFE
+EMISSAO, --DATA DE EMISSÃO DA NFE
 TIPO,
-EMISSAO,
-PESSOA,
+DATA_HORAPROTOCOLO, -- DA NFE
+PEDIDO, --TOTAL DO PEDIDO
+CHACESSONFE_PEDIDO --CHAVE DE ACESSO NFE
+
 LOCENTREGA,
 TOTAL,
 SUBTOTAL,

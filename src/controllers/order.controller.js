@@ -1,5 +1,7 @@
 const db = require("../config/database");
 const request = require('request');
+// const { Pool } = require("pg");
+// const pool = new Pool();
 // const axios = require("axios").default;
 
 //  Seleciona Pedido pelo Id: 
@@ -7,10 +9,10 @@ const request = require('request');
     const { id } = req.params;
     /* const { id, title } = req.body; */
 
-    if (!req.params.id) { 
-      res.status(500); 
-      res.send({"Error": "No ID"}); 
-   } 
+  //   if (!req.params.id) { 
+  //     res.status(500); 
+  //     res.send({"Error": "No ID"}); 
+  //  } 
 
     const options = {
       method: 'GET',
@@ -33,22 +35,18 @@ const request = require('request');
               const id = data.id || '';
               
               // Conn Postgresql
-              (async () => {
+             (async () => {
+               const { rows } = await db.query('INSERT INTO titles(id, title) values($1, $2)', 
+               [id, title])
 
-                const { rows } = await db.query('INSERT INTO titles(id, title) values($1, $2)', 
-                [id, title])
-                // [id, title, createdAt, createdAt])
-
-                    res.json({
-                    message: 'Pedido Criado com Successo',
-                    body: {
-                      order: { id, title }
-                    },
-                  });
-                            
-              })().catch(err =>
-                setImmediate(() => {throw err})
-              )
+                   res.json({
+                   message: 'Pedido Criado com Successo',
+                   body: {
+                     order: { id, title }
+                   },
+                 });
+                
+             })().catch(err => setImmediate(() => {throw err}))
           } 
       }
   ); 
