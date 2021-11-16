@@ -329,7 +329,7 @@ FROM PEDIDO;
 select YSTATUS from INTEGRACAO
 select DATAEMBARQUE from PEDIDO
 
-
+---INFORMAÇÕES DA NFE
 --/Configuração/Fiscais/0100 Accounting.ic
 this.camposInalteraveisDaNfe.push(
     "TIPO",
@@ -346,7 +346,20 @@ this.camposInalteraveisDaNfe.push(
     //"TIPOCONTINGENCIANFE",
     //"TIPOEMISSAONFE"
 );
-
+SELECT 
+STATUSCORRENTE, --status da NFE
+CRPEDIDO, --CHAVE DE CRIAÇÃO PEDIDO
+NUMERO, --DA NFE
+SERIE, -- DA NFE
+CFOP, -- DA NFE
+PESSOA, --CLIENTE DO PEDIDO
+PESSOAUF, --UF DO CLIENTE DA NFE
+EMISSAO, --DATA DE EMISSÃO DA NFE
+TIPO,
+DATA_HORAPROTOCOLO, -- DA NFE
+PEDIDO, --TOTAL DO PEDIDO
+CHACESSONFE_PEDIDO --CHAVE DE ACESSO NFE
+FROM PEDIDO;
 this.declareArray("classesDeRecursosEscriturais");
 
 --- PrincipiaPedidoService.ijs (-1894804822) ---
