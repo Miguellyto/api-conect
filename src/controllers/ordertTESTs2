@@ -330,6 +330,20 @@ select YSTATUS from INTEGRACAO
 select DATAEMBARQUE from PEDIDO
 
 ---INFORMAÇÕES DA NFE
+{
+"status":"invoiced",
+"shipments":
+[{
+"id":"5f2b3390832cf0523fa8c871", ====> ID do shipment
+"status":"shipped",
+"date_shipped":"2020-08-05",
+"nfe_key":"858585858585858",
+"nfe_link":"http://nfe.com.br/nsaasa",
+"nfe_number":"12",
+"nfe_serie":"1",
+"nfe_date":"2020-08-05"
+}]
+}
 --/Configuração/Fiscais/0100 Accounting.ic
 this.camposInalteraveisDaNfe.push(
     "TIPO",
