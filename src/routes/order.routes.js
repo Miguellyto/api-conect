@@ -13,6 +13,18 @@ router.get('/orders_bd', orderController.listAllOrders_bd);
 //  Seleciona pedido pelo Id: (GET): localhost:4000/api/order/:id
 router.get('/order_bd/:id', orderController.findOrderById_bd);
 
+// Tipos de pagamento do Pedido pelo Id: (GET): localhost:4000/api/order/:id
+// router.get('/order/:id', orderController.findOrderById);
+
+// Atualiza pedido pelo Id: (PUT): localhost:4000/api/order/:id
+// router.put('/order/:id', orderController.updateOrderById);
+
+// Envio do Status Faturado do Pedido pelo Id: (GET): localhost:4000/api/order/:id
+// router.get('/order/:id', orderController.findOrderById);
+
+// Envio do Status Despachado do Pedido pelo Id: (GET): localhost:4000/api/order/:id
+// router.get('/order/:id', orderController.findOrderById);
+
 // ==> Rota responsável por criar um novo pedido: (POST): localhost:4000/api/order
 // router.post('/order', orderController.createOrder);
 

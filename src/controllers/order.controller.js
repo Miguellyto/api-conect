@@ -101,6 +101,11 @@ exports.listAllOrders_bd = async (req, res) => {
         res.status(200).send(response.rows);
       };
 
+// Tipos de pagamento do Pedido:
+// Atualizar Pedido:
+// Envio do Status Faturado:
+// Envio do Status Despachado:
+
 // cria um novo Pedido:
       // exports.createOrder = async (req, res) => {
       //   const { id_produto, quantidade } = req.body;
