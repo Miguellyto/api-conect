@@ -14,24 +14,24 @@ router.get('/orders_bd', orderController.listAllOrders_bd);
 router.get('/order_bd/:id', orderController.findOrderById_bd);
 
 // Tipos de pagamento do Pedido pelo Id: (GET): localhost:4000/api/order/:id
-// router.get('/order/:id', orderController.findOrderById);
+// router.get('/order/:id', orderController.findOrderPgto);
 
 // Atualiza pedido pelo Id: (PUT): localhost:4000/api/order/:id
 // router.put('/order/:id', orderController.updateOrderById);
 
 // Envio do Status Faturado do Pedido pelo Id: (GET): localhost:4000/api/order/:id
-// router.get('/order/:id', orderController.findOrderById);
+// router.get('/order/:id', orderController.findOrderStatus);
 
 // Envio do Status Despachado do Pedido pelo Id: (GET): localhost:4000/api/order/:id
-// router.get('/order/:id', orderController.findOrderById);
+// router.get('/order/:id', orderController.findOrderShipping);
 
-// ==> Rota responsável por criar um novo pedido: (POST): localhost:4000/api/order
+//  ==> Rota responsável por criar um novo pedido: (POST): localhost:4000/api/order
 // router.post('/order', orderController.createOrder);
 
-//  Atualiza pedido pelo Id: (PUT): localhost:4000/api/order/:id
+//  ==> Atualiza pedido pelo Id: (PUT): localhost:4000/api/order/:id
 // router.put('/order/:id', orderController.updateOrderById);
 
-//  Excluir pedido pelo Id: (DELETE): localhost:4000/api/order/:id
+//  ==> Excluir pedido pelo Id: (DELETE): localhost:4000/api/order/:id
 // router.delete('/order/:id', orderController.deleteOrderById);
 
 module.exports = router;
