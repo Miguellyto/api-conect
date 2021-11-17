@@ -24,7 +24,7 @@
           "payment_type": "credit", // select TIPO from TABELA
           "payment_method": "Nome do método como enviado pelo canal de venda",
           "payment_installments": "3", DIVIDIR
-          "payment_total": 100,
+          "payment_total": 100, 
           "payment_quota": 30,
           "payment_interest": 3,
           "payment_additional_info": null,
@@ -193,7 +193,6 @@
 
 /* Select * from integracao LIMIT 2; */
 
-
 --Visualizando as colunas de uma tabela
 /* SELECT column_name FROM information_schema.columns WHERE table_name = 'recurso'; */
 
@@ -242,19 +241,6 @@ yecommercecategoria,
 yecommerceapelido
 from RECURSO WHERE NOME LIKE '%ESMALTEC%';
 
----Tabela VINCULA onde costa o "SALDO DO RECURSO"=Quantidade "ESTOQUE"
-select
-CHAVE,
-RECURSO,
-QUANTIDADE,
-VALOR,
-LOCESCRITU
-from VINCULA WHERE NOME LIKE '%ESMALTEC%';
-
----Tabela FATOR, onde consta o FATOR=Preços dos RECURSOS=Produtos
-SELECT * FROM FATOR LIMIT 10;
-SELECT fator FROM FATOR;
-
 /* SELECT
 icreatedat,
 iupdatedat
@@ -284,8 +270,16 @@ Select iKey, iVersion, iFieldNames, iBeforeValues
 From iLog
 Where iType = -1898145931 /* Registro Removido */;
 
+--RASTREAMENTO DO PEDIDO:
+SELECT 
+PESSOA,
+CHCRIACAO,
+NUMERO, --DA NFE
+EMISSAO,
+CODIGORASTREIO
+FROM PEDIDO;
 
---- Código de Rastreamento.ip (-1894804815) --- 
+--- Código de Rastreamento.ip (-1894804815) --- faturamento,frete e status
 Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIGO as CODIGORASTREIO, e.CHAVE as CHAVE_EVENTO
         From PEDIDO p
         join INTEGRACAO i on i.YIDPEDIDO = p.YIDPEDIDO
@@ -296,6 +290,7 @@ Select distinct p.PESSOA, p.NUMERO, p.EMISSAO, p.CHCRIACAO, p.YIDPEDIDO, e.CODIG
             and p.APROVACAO is not null
             and p.STATUSNFE = -1894641856 /* Enviada com Sucesso */
         " + whereExpress + "
+
 
 --RASTREAMENTO DO PEDIDO:
 SELECT 
@@ -329,21 +324,7 @@ FROM PEDIDO;
 select YSTATUS from INTEGRACAO
 select DATAEMBARQUE from PEDIDO
 
----INFORMAÇÕES DA NFE
-{
-"status":"invoiced",
-"shipments":
-[{
-"id":"5f2b3390832cf0523fa8c871", ====> ID do shipment
-"status":"shipped",
-"date_shipped":"2020-08-05",
-"nfe_key":"858585858585858",
-"nfe_link":"http://nfe.com.br/nsaasa",
-"nfe_number":"12",
-"nfe_serie":"1",
-"nfe_date":"2020-08-05"
-}]
-}
+
 --/Configuração/Fiscais/0100 Accounting.ic
 this.camposInalteraveisDaNfe.push(
     "TIPO",
@@ -360,21 +341,6 @@ this.camposInalteraveisDaNfe.push(
     //"TIPOCONTINGENCIANFE",
     //"TIPOEMISSAONFE"
 );
-SELECT 
-STATUSCORRENTE, --status da NFE
-CRPEDIDO, --CHAVE DE CRIAÇÃO PEDIDO
-NUMERO, --DA NFE
-SERIE, -- DA NFE
-CFOP, -- DA NFE
-PESSOA, --CLIENTE DO PEDIDO
-PESSOAUF, --UF DO CLIENTE DA NFE
-EMISSAO, --DATA DE EMISSÃO DA NFE
-TIPO,
-DATA_HORAPROTOCOLO, -- DA NFE
-PEDIDO, --TOTAL DO PEDIDO
-CHACESSONFE_PEDIDO --CHAVE DE ACESSO NFE
-FROM PEDIDO;
-this.declareArray("classesDeRecursosEscriturais");
 
 --- PrincipiaPedidoService.ijs (-1894804822) ---
         select
@@ -501,21 +467,44 @@ this.declareArray("classesDeRecursosEscriturais");
     }
 };
 
---TABELA INTEGRACAO
+---/products/Web Commerce/library/objects/ecommerce/pesquisas/ECommerceConsultaPedidosCC.ijs
+ECommerceConsultaPedidosCC.prototype._consultarNotificacoes = function( ids ){
+    var notificacoes = database.query("
+        select YIDPEDIDO as ID, DATA, HORA, USUARIO, SITUACAO
+        from EVENTO " +
+        queryUtilities.clauseWhereOfKeys("where", "CLASSE", classes.getChildren( ECommerceConstantesCC.classes.EVENTOS_ATENDIMENTO )) +
+            queryUtilities.clauseWhereOfKeys("and", "YIDPEDIDO", ids )
+    );
+
+    this.notificacoes.append( notificacoes );
+
+
+--/products/Web Commerce/library/objects/ecommerce/base/ECommercePedidoConverterCC.ijs
+var endereco = dadosPessoa.endereco.split(" ");
+        var tipologradouro = endereco[0];
+        var tabelaTipoLogradouro = database.query("
+        	select CHAVE
+            from TABELA
+            where
+                CLASSE = -1897131373 and
+                (CODIGO ilike '%" + tipologradouro + "%' or
+                NOME ilike '%" + tipologradouro + "%')
+         ");
+
+--TABELA INTEGRACAO--
 /* select
 CHAVE,
 VERSAOPEDIDO,
-DATAGRAVACAOPEDIDO,
+DATAGRAVACAOPEDIDO, --Retorna a data de criação do PEDIDO 
 HORAGRAVACAOPEDIDO,
 DADOSPEDIDO,
 YAVISOFATURAMENTO,
 YAVISOFATURAMENTOH,
-YAVISOFATURAMENTOUSUARIO, 
+YAVISOFATURAMENTOUSUARIO,
 YDADOSPAGAMENTO,
 YSITUACAOPAGAMENTO,
 YDADOSPEDIDO,
 YSTATUS,
-STATUS,
 YIDPEDIDO,
 YEMAIL
 from integracao LIMIT 2; */
@@ -531,7 +520,28 @@ CONDNEGOCIACAO,
 YABSORVEPARCELAECOMMERCE,
 YCONSIDERAFRETETITULO,
 YCRIAPEDIDOCOMTITULOPENDENTE
-FROM tabela where 1 = 2;
+FROM tabela where 1 = 2
+select TOTAL from PEDIDO --Total do Pedido
+
+---Tipos de pagamento
+"payments" : [
+ {
+ "payment_total" : 24.56, // select TOTAL from PEDIDO 
+ "payment_installments" : 1, // select CONDNEGOCIACAO from TABELA
+ "payment_method" : "credit_card", // select NOME from TABELA
+ "payment_type" : "credit", // select TIPO from TABELA
+ "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
+ },
+ ]
+
+select TOTAL from PEDIDO
+select
+CONDNEGOCIACAO,
+NOME,
+TIPO,
+CODIGO 
+from TABELA;
+
 
 ---MAIS CAMPOS DA TABELA "tabela"
 SELECT 
@@ -572,14 +582,6 @@ FROM tabela where 1 = 2;
 
  Select * from PEDIDO where 1 = 2;
   Select * from PEDIDO LIMIT 2;
-
-select
-CHAVE,
-RECURSO,
-QUANTIDADE,
-CUSTO --Preço
-from MOVDEPOS
-LIMIT 10;
 
 --TABELA PEDIDO
 select
@@ -633,6 +635,8 @@ YIDPEDIDO,
 MOEDA,
 NUMEROSERIE,
 SERIESUBS,
+EMAILPESSOA, 
+EMAILTRANSPORTADOR,
 
 STATUSCORRENTE, --status da NFE
 CRPEDIDO, --CHAVE DE CRIAÇÃO PEDIDO
@@ -654,6 +658,9 @@ TOTALDANOTA,
 TOTALLIQUIDO,
 TOTALBRUTO
 from PEDIDO LIMIT 2;
+
+--TABELA PESSOA--
+SELECT EMAIL FROM PESSOA --CLASSE;
 
 ---PESSOA PEDIDO
 SELECT
@@ -702,6 +709,27 @@ ENTTIPOLOGRADOURO,
 ENTSUBLOCALIDADE
 FROM pedido;
 
+---Tabela VINCULA onde consta o "SALDO DO RECURSO"=Quantidade "ESTOQUE"
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+VALOR,
+LOCESCRITU
+from VINCULA WHERE NOME LIKE '%ESMALTEC%';
+
+---Tabela FATOR, onde consta o FATOR=Preços dos RECURSOS=Produtos
+SELECT * FROM FATOR LIMIT 10;
+SELECT fator FROM FATOR;
+
+select
+CHAVE,
+RECURSO,
+QUANTIDADE,
+CUSTO --Preço
+from MOVDEPOS
+LIMIT 10;
+
 ---Produto OK---
 select 
     a.chave, 
@@ -737,3 +765,106 @@ select
     and b.tabfator = 462894
     and b.fim is null
 where codigo = '1056'
+
+---Tipos de pagamento
+"payments" : [
+ {
+ "payment_total" : 24.56, // select TOTAL from PEDIDO 
+ "payment_installments" : 1, // select CONDNEGOCIACAO from TABELA
+ "payment_method" : "credit_card", // select NOME from TABELA
+ "payment_type" : "credit", // select TIPO from TABELA
+ "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
+ },
+ ]
+
+select TOTAL from PEDIDO
+select
+CONDNEGOCIACAO,
+NOME,
+TIPO,
+CODIGO 
+from TABELA;
+
+--------Campos obrigatórios para atualizar pedido
+{
+"status":("invoiced"/"shipping_informed"/"delivered"/"canceled"),//select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"shipments":
+[
+{"id":"32132311311", //SELECT YIDPEDIDO/chave FROM PEDIDO 
+"shipping_company":"Correios", //SELECT TRANSPORTA FROM PEDIDO
+"shipping_method":"PAC", //select TIPOFRETE from PEDIDO
+"track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
+"track_url":"http://correios.com.br", //'track_url' as track_url
+"date_shipped":"2016-11-01", //select DATAEMBARQUE from PEDIDO
+"nfe_key":"44444444444444444444444444444", //select CHACESSONFE_PEDIDO from PEDIDO
+"nfe_link":"http://nfe.com.br/nsaasa", //'nfe_link' as nfe_link,
+"nfe_number":"12", //select NUMERO from PEDIDO
+"nfe_serie":"1", //select SERIE from PEDIDO
+"nfe_date":"2016-11-01" //select EMISSAO from PEDIDO
+}]
+select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+SELECT 
+YIDPEDIDO/chave,  
+TRANSPORTA, 
+TIPOFRETE, 
+CODIGORASTREIO/RASTREIO, 
+'track_url' as track_url,
+DATAEMBARQUE, 
+DATAEMBARQUE, 
+CHACESSONFE_PEDIDO, 
+'nfe_link' as nfe_link,
+NUMERO, 
+SERIE, 
+EMISSAO 
+from PEDIDO;
+
+--------Envio do Status Faturado 
+{
+"status":"invoiced",//select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"shipments":
+[{
+"id":"5f2b3390832cf0523fa8c871", //select CHCRIACAO from PEDIDO
+"status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"date_shipped":"2020-08-05", //select DATAEMBARQUE from PEDIDO
+"nfe_key":"858585858585858", //select CHACESSONFE_PEDIDO from PEDIDO
+"nfe_link":"http://nfe.com.br/nsaasa",
+"nfe_number":"12", //select NUMERO from PEDIDO
+"nfe_serie":"1", //select SERIE from PEDIDO
+"nfe_date":"2020-08-05" //select EMISSAO from PEDIDO
+}]
+}
+select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+select 
+CHCRIACAO, 
+STATUSNFE, //select YSTATUS/STATUS from INTEGRACAO
+DATAEMBARQUE,
+CHACESSONFE_PEDIDO,
+'nfe_link' as nfe_link,
+NUMERO,
+SERIE,
+EMISSAO
+from PEDIDO;
+
+--------RASTREAMENTO DO PEDIDO _ Envio do Status Despachado:
+{
+"status":"shipping_informed", //select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO 
+ [{
+"id":"606b87e9e7cb7f1d4d5f8d33", //select CHCRIACAO from PEDIDO
+"status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
+"date_shipped":"2021-02-01" //select DATAEMBARQUE from PEDIDO
+"shipping_company":"Correios", //SELECT TRANSPORTA FROM PEDIDO
+"shipping_method":"PAC", //select TIPOFRETE from PEDIDO
+"track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
+"track_url":"http://correios.com.br", //'track_url' as track_url
+}]
+}
+select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+select
+CHCRIACAO,
+STATUSNFE, //select YSTATUS from INTEGRACAO
+DATAEMBARQUE,
+TRANSPORTA,
+TIPOFRETE,
+CODIGORASTREIO / RASTREIO,
+'track_url' as track_url
+from PEDIDO;
