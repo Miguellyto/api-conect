@@ -16,6 +16,9 @@ router.get('/order_bd/:id', orderController.findOrderById_bd);
 // Pagamento do Pedido: (GET): localhost:4000/api/order/:id
 router.get('/order/pgto/:id', orderController.findOrderPgto);
 
+// GET do Pedido Atualizado: (GET): localhost:4000/api/order/updated/:id
+router.get('/order/updated/:id', orderController.updatedOrderById);
+
 // Atualiza pedido pelo Id: (PATCH / PUT): localhost:4000/api/order/:id
 router.patch('/order/:id', orderController.updateOrderById);
 
@@ -35,3 +38,4 @@ router.get('/order/shipping/:id', orderController.findOrderShipping);
 // router.delete('/order/:id', orderController.deleteOrderById);
 
 module.exports = router;
+
