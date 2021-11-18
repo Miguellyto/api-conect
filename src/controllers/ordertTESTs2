@@ -23,11 +23,11 @@
         {
           "payment_type": "credit", // select TIPO from TABELA
           "payment_method": "Nome do método como enviado pelo canal de venda",
-          "payment_installments": "3", DIVIDIR
+          "payment_installments": "3", // select NUMPARCELA/NUMPARCELAS from PARCELA
           "payment_total": 100, 
           "payment_quota": 30,
           "payment_interest": 3,
-          "payment_additional_info": null,
+          "payment_additional_info": null, // select DESCFINANCEIRO from PARCELA
           "external": null,
           "id": "6042121bb71e3422dafd2404"
         }
@@ -85,7 +85,7 @@
       "receiver_neighborhood": "Barra funda",null,
       "receiver_phone_area": "",null,
 
-      "payer_name": "Luizo", //Nome do pagador
+      "payer_name": "Luizo", SELECT PESSOA/PESSOACONTRATO FROM PARCELA
       "payer_lastname": "Santos",
       "payer_address": "Rua do Bosque",
       "payer_address_number": "440",
@@ -527,7 +527,7 @@ select TOTAL from PEDIDO --Total do Pedido
 "payments" : [
  {
  "payment_total" : 24.56, // select TOTAL from PEDIDO 
- "payment_installments" : 1, // select CONDNEGOCIACAO from TABELA
+ "payment_installments" : 1, // select NUMPARCELA from PARCELA
  "payment_method" : "credit_card", // select NOME from TABELA
  "payment_type" : "credit", // select TIPO from TABELA
  "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
@@ -536,7 +536,7 @@ select TOTAL from PEDIDO --Total do Pedido
 
 select TOTAL from PEDIDO
 select
-CONDNEGOCIACAO,
+NUMPARCELA from PARCELA
 NOME,
 TIPO,
 CODIGO 
@@ -769,17 +769,17 @@ where codigo = '1056'
 ---Tipos de pagamento
 "payments" : [
  {
- "payment_total" : 24.56, // select TOTAL from PEDIDO 
- "payment_installments" : 1, // select YABSORVEPARCELAECOMMERCE/CONDNEGOCIACAO from TABELA
+ "payment_total" : 24.56, // select TOTAL from PEDIDO //select VALOR from PARCELA
+ "payment_installments" : 1, // select NUMPARCELA/NUMPARCELAS from PARCELA
  "payment_method" : "credit_card", // select NOME from TABELA
  "payment_type" : "credit", // select TIPO from TABELA
- "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
+ "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA //select CHAVE/CHCRIACAO from PARCELA
  },
  ]
 
 select TOTAL from PEDIDO
 select
-CONDNEGOCIACAO,
+NUMPARCELA/NUMPARCELAS from PARCELA
 NOME,
 TIPO,
 CODIGO 
@@ -828,7 +828,7 @@ from PEDIDO;
 "status":"shipped",//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "date_shipped":"2020-08-05", //select DATAEMBARQUE from PEDIDO
 "nfe_key":"858585858585858", //select CHACESSONFE_PEDIDO from PEDIDO
-"nfe_link":"http://nfe.com.br/nsaasa",
+"nfe_link":"http://nfe.com.br/nsaasa", // 'nfe_link' as nfe_link,
 "nfe_number":"12", //select NUMERO from PEDIDO
 "nfe_serie":"1", //select SERIE from PEDIDO
 "nfe_date":"2020-08-05" //select EMISSAO from PEDIDO
