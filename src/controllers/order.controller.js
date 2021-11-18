@@ -97,6 +97,8 @@ exports.findOrderPgto = async (req, res) => {
   ); 
 };
 
+//  ==> GET do Pedido Atualizado:
+
 //  ==> Atualizar Pedido:
 exports.updateOrderById = async (req, res) => {
   const { id } = req.params;
@@ -171,7 +173,7 @@ exports.findOrderStatus = async (req, res) => {
     res.status(200).send(response.rows);
 };
 
-//  ==> Envio do Status Despachado - Envio do Pedido:
+//  ==> Envio do Status Despachado - Envio do Pedido: 
 exports.findOrderShipping = async (req, res) => {
   const id = parseInt(req.params.id);
     const response = await db.query(

@@ -787,11 +787,11 @@ from TABELA;
 
 --------Campos obrigatórios para atualizar pedido
 {
-"status":("invoiced"/"shipping_informed"/"delivered"/"canceled"),//select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"status":("invoiced"/"shipping_informed"/"delivered"/"canceled"),//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "shipments":
 [
 (Guardar este ID para fazer atualizações futuras na entrega, do contrário serão criadas entregas duplicadas)
-{"id":"32132311311", //SELECT YIDPEDIDO/chave FROM PEDIDO 
+{"id":"32132311311", //SELECT IDPEDIDO/YIDPEDIDO/chave FROM PEDIDO 
 "shipping_company":"Correios", //SELECT TRANSPORTA FROM PEDIDO
 "shipping_method":"PAC", //select TIPOFRETE from PEDIDO
 "track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
@@ -805,7 +805,7 @@ from TABELA;
 }]
 select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 SELECT 
-YIDPEDIDO/chave,  
+IDPEDIDO/YIDPEDIDO/chave,  
 TRANSPORTA, 
 TIPOFRETE, 
 CODIGORASTREIO/RASTREIO, 
