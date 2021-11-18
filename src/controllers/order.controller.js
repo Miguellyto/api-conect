@@ -101,12 +101,24 @@ exports.findOrderPgto = async (req, res) => {
 exports.updatedOrderById = async (req, res) => {
   const id = parseInt(req.params.id);
   const response = await db.query(
-    'SELECT * FROM titles WHERE id = $1',
+    `SELECT
+    status,
+    id,
+    shipping_method,
+    track_code,
+    track_url,
+    date_shipped,
+    nfe_key,
+    nfe_link,
+    nfe_number,
+    nfe_serie,
+    nfe_date]);
+    FROM order WHERE id = $1`,
     [id],
   );
   res.status(200).send(response.rows);
 };
-//  ==> Atualizar Pedido:
+//  ==> Atualizar Pedido: 
 exports.updateOrderById = async (req, res) => {
   const { id } = req.params;
 
