@@ -98,7 +98,14 @@ exports.findOrderPgto = async (req, res) => {
 };
 
 //  ==> GET do Pedido Atualizado:
-
+exports.updatedOrderById = async (req, res) => {
+  const id = parseInt(req.params.id);
+  const response = await db.query(
+    'SELECT * FROM titles WHERE id = $1',
+    [id],
+  );
+  res.status(200).send(response.rows);
+};
 //  ==> Atualizar Pedido:
 exports.updateOrderById = async (req, res) => {
   const { id } = req.params;
