@@ -770,7 +770,7 @@ where codigo = '1056'
 "payments" : [
  {
  "payment_total" : 24.56, // select TOTAL from PEDIDO 
- "payment_installments" : 1, // select CONDNEGOCIACAO from TABELA
+ "payment_installments" : 1, // select YABSORVEPARCELAECOMMERCE/CONDNEGOCIACAO from TABELA
  "payment_method" : "credit_card", // select NOME from TABELA
  "payment_type" : "credit", // select TIPO from TABELA
  "_id" : ObjectId("5dacf4eef13005ee3cdc02d4") // select CODIGO from TABELA
@@ -791,7 +791,7 @@ from TABELA;
 "shipments":
 [
 (Guardar este ID para fazer atualizações futuras na entrega, do contrário serão criadas entregas duplicadas)
-{"id":"32132311311", //SELECT IDPEDIDO/YIDPEDIDO/chave FROM PEDIDO 
+{"id":"32132311311", //SELECT IDPEDIDO/YIDPEDIDO FROM PEDIDO 
 "shipping_company":"Correios", //SELECT TRANSPORTA FROM PEDIDO
 "shipping_method":"PAC", //select TIPOFRETE from PEDIDO
 "track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
@@ -805,7 +805,7 @@ from TABELA;
 }]
 select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 SELECT 
-IDPEDIDO/YIDPEDIDO/chave,  
+IDPEDIDO/YIDPEDIDO,  
 TRANSPORTA, 
 TIPOFRETE, 
 CODIGORASTREIO/RASTREIO, 
@@ -821,11 +821,11 @@ from PEDIDO;
 
 --------Envio do Status Faturado 
 {
-"status":"invoiced",//select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"status":"invoiced",//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "shipments":
 [{
 "id":"5f2b3390832cf0523fa8c871", //select CHCRIACAO from PEDIDO
-"status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+"status":"shipped",//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "date_shipped":"2020-08-05", //select DATAEMBARQUE from PEDIDO
 "nfe_key":"858585858585858", //select CHACESSONFE_PEDIDO from PEDIDO
 "nfe_link":"http://nfe.com.br/nsaasa",
@@ -834,10 +834,10 @@ from PEDIDO;
 "nfe_date":"2020-08-05" //select EMISSAO from PEDIDO
 }]
 }
-select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 select 
 CHCRIACAO, 
-STATUSNFE, //select YSTATUS/STATUS from INTEGRACAO
+SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 DATAEMBARQUE,
 CHACESSONFE_PEDIDO,
 'nfe_link' as nfe_link,
@@ -848,9 +848,9 @@ from PEDIDO;
 
 --------RASTREAMENTO DO PEDIDO _ Envio do Status Despachado:
 {
-"status":"shipping_informed", //select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO 
+"status":"shipping_informed",select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
  [{
-"id":"606b87e9e7cb7f1d4d5f8d33", //select CHCRIACAO from PEDIDO
+"id":"606b87e9e7cb7f1d4d5f8d33", //select IDPEDIDO/CHCRIACAO from PEDIDO
 "status":"shipped", //select STATUSNFE from PEDIDO //select YSTATUS from INTEGRACAO
 "date_shipped":"2021-02-01" //select DATAEMBARQUE from PEDIDO
 "shipping_company":"Correios", //SELECT TRANSPORTA FROM PEDIDO
@@ -858,10 +858,10 @@ from PEDIDO;
 "track_code":"11111", //select CODIGORASTREIO/RASTREIO from PEDIDO
 "track_url":"http://correios.com.br", //'track_url' as track_url
 }]
-}
-select STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
+} 
+select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 select
-CHCRIACAO,
+IDPEDIDO/CHCRIACAO,
 STATUSNFE, //select YSTATUS from INTEGRACAO
 DATAEMBARQUE,
 TRANSPORTA,
