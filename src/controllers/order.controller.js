@@ -8,12 +8,10 @@ const request = require('request');
   exports.findOrderById = async (req, res) => {
     const { id } = req.params;
     /* const { id, title } = req.body; */
-
-    //   if (!req.params.id) { 
+  //   if (!req.params.id) { 
   //     res.status(500); 
   //     res.send({"Error": "No ID"}); 
   //  } 
-
     const options = {
       method: 'GET',
       // url: `https://api.plugg.to/orders/${id}`,
@@ -26,7 +24,6 @@ const request = require('request');
         'Content-Type': 'application/json'
       }
     };
-
       request(options, (error, response, body) => { 
 
           if (!error && response.statusCode == 200) { 
@@ -44,9 +41,7 @@ const request = require('request');
                    res.json({
                    message: 'Pedido Criado com Successo',
                      order: { id, name, email }
-
                  });
-                
              })().catch(err => setImmediate(() => {throw err}))
           } 
       }
