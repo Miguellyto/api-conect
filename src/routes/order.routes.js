@@ -8,10 +8,13 @@ router.get('/order/:id', orderController.findOrderById);
 router.get('/orders', orderController.listAllOrders);
 
 //  Lista todos os pedido: (GET): localhost:4000/api/orders_bd
-router.get('/orders_bd', orderController.listAllOrders_bd);
+router.get('/orders_db', orderController.listAllOrders_db);
+
+// Atualiza pedido pelo Id: (PATCH / PUT): localhost:4000/api/order_bd/:id
+router.patch('/order_db/:id', orderController.updateOrderById_db);
 
 //  Seleciona pedido pelo Id: (GET): localhost:4000/api/order_bd/:id
-router.get('/order_bd/:id', orderController.findOrderById_bd);
+router.get('/order_db/:id', orderController.findOrderById_db);
 
 // Pagamento do Pedido: (GET): localhost:4000/api/order/pgto/:id
 router.get('/order/pgto/:id', orderController.findOrderPgto);

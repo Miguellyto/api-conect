@@ -9,16 +9,14 @@ const request = require('request');
     const { id } = req.params;
     /* const { id, title } = req.body; */
 
-  //   if (!req.params.id) { 
-  //     res.status(500); 
-  //     res.send({"Error": "No ID"}); 
-  //  } 
+
 
     const options = {
       method: 'GET',
       // url: `https://api.plugg.to/orders/${id}`,
       // url: "https://jsonplaceholder.typicode.com/posts/" + req.params.id, 
-      url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+      // url: `https://jsonplaceholder.typicode.com/posts/${id}`,
+      url: "https://jsonplaceholder.typicode.com/comments/"+ req.params.id,
       headers: {
         Accept: 'application/json',
         Authorization: 'Bearer {ACCESS_TOKEN}',
@@ -31,18 +29,23 @@ const request = require('request');
           if (!error && response.statusCode == 200) { 
               //obter dados do corpo ... por exemplo título+ID
               const data = JSON.parse(body);
-              const title = data.title || '';
               const id = data.id || '';
+              const name = data.name || '';
+              const email = data.email || '';
               
               // Conn Postgresql
              (async () => {
-               const { rows } = await db.query('INSERT INTO titles(id, title) values($1, $2)', 
-               [id, title])
+               const { rows } = await db.query('INSERT INTO users(id, name, email) values($1, $2, $3)', 
+               [id, name, email])
 
+               if (!req.params.id) { 
+                res.status(500); 
+                res.send({"Error": "No ID"}); 
+             } 
                    res.json({
                    message: 'Pedido Criado com Successo',
                    body: {
-                     order: { id, title }
+                     order: { id, name, email }
                    },
                  });
                 
@@ -240,23 +243,42 @@ request(options, (error, response, body) => {
 });
 };
 
-//  Lista todos os orders BD:
-exports.listAllOrders_bd = async (req, res) => {
+//  Lista todos os orders DB:
+exports.listAllOrders_db = async (req, res) => {
   const response = await db.query(
-    'SELECT * FROM titles ORDER BY id ASC',
+    'SELECT * FROM users ORDER BY id ASC',
+    // 'SELECT * FROM titles ORDER BY id ASC',
     //'SELECT * FROM titles ORDER BY title DESC',
   );
   res.status(200).send(response.rows);
 };
 
-//  Seleciona order pelo Id BD:
-      exports.findOrderById_bd = async (req, res) => {
+//  Seleciona order pelo Id DB:
+      exports.findOrderById_db = async (req, res) => {
         const id = parseInt(req.params.id);
         const response = await db.query(
-          'SELECT * FROM titles WHERE id = $1',
+          'SELECT * FROM users WHERE id = $1',
+          // 'SELECT * FROM titles WHERE id = $1',
           [id],
         );
         res.status(200).send(response.rows);
+      };
+
+      //  Atualiza um Pedido pelo Id DB: --Rota apenas para testes
+        exports.updateOrderById_db = async (req, res) => {
+          // const id_order = parseInt(req.params.id);
+          const { id, name, email } = req.body;
+  
+          const response = await db.query(
+            'UPDATE orders SET id = $1, name = $2, email = $3 WHERE id = $3',
+            [id, name, email]
+          );
+          res.status(200).send({ 
+          message: 'Pedido Atualizado com Successo', 
+          body: {
+            order: { id, name, email }
+          },
+        });
       };
 
 // cria um novo Pedido:
