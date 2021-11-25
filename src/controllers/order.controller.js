@@ -43,9 +43,8 @@ const request = require('request');
 
                    res.json({
                    message: 'Pedido Criado com Successo',
-                   body: {
                      order: { id, name, email }
-                   },
+
                  });
                 
              })().catch(err => setImmediate(() => {throw err}))
