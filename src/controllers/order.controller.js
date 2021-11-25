@@ -7,7 +7,7 @@ const request = require('request');
 //  Seleciona Pedido pelo Id: 
   exports.findOrderById = async (req, res) => {
     const { id } = req.params;
-    /* const { id, title } = req.body; */
+    /* const { id } = req.body; */
   //   if (!req.params.id) { 
   //     res.status(500); 
   //     res.send({"Error": "No ID"}); 
@@ -17,7 +17,7 @@ const request = require('request');
       // url: `https://api.plugg.to/orders/${id}`,
       // url: "https://jsonplaceholder.typicode.com/posts/" + req.params.id, 
       // url: `https://jsonplaceholder.typicode.com/posts/${id}`,
-      url: "https://jsonplaceholder.typicode.com/comments/"+ req.params.id,
+      url: `https://jsonplaceholder.typicode.com/comments/${id}`,
       headers: {
         Accept: 'application/json',
         Authorization: 'Bearer {ACCESS_TOKEN}',
