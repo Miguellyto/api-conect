@@ -9,7 +9,10 @@ const request = require('request');
     const { id } = req.params;
     /* const { id, title } = req.body; */
 
-
+    //   if (!req.params.id) { 
+  //     res.status(500); 
+  //     res.send({"Error": "No ID"}); 
+  //  } 
 
     const options = {
       method: 'GET',
@@ -38,10 +41,6 @@ const request = require('request');
                const { rows } = await db.query('INSERT INTO users(id, name, email) values($1, $2, $3)', 
                [id, name, email])
 
-               if (!req.params.id) { 
-                res.status(500); 
-                res.send({"Error": "No ID"}); 
-             } 
                    res.json({
                    message: 'Pedido Criado com Successo',
                    body: {
