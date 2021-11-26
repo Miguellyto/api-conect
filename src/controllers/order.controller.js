@@ -4,6 +4,8 @@ const request = require('request');
 // const pool = new Pool();
 // const axios = require("axios").default;
 
+/* const TOKEN = '[SEU TOKEN]'; */
+
 //  Seleciona e Cria Pedido pelo Id: 
   exports.findOrderById = async (req, res) => {
     const { id } = req.params;
@@ -43,7 +45,7 @@ const request = require('request');
                 res.status(200).send({
                 message: 'Pedido Criado com Successo',
                 order: { id, name, email },
-               })
+               }) 
               //}
 
              })().catch(error => {
