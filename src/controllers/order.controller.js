@@ -91,7 +91,7 @@ exports.findOrderPgto = async (req, res) => {
 
             res.status(200).send({
               message: 'Pagamento Atualizado com Successo',
-              order: { id, name, email },
+              order: {payment_total, payment_installments, payment_method, payment_type, _id},
             })
             //}
 
@@ -169,7 +169,7 @@ exports.updateOrderById = async (req, res) => {
 
             res.status(200).send({
               message: 'Pedido Atualizado com Successo',
-              order: { id, name, email },
+              order: {status, id, shipping_method, track_code, track_url, date_shipped, nfe_key, nfe_link, nfe_number, nfe_serie, nfe_date},
             })
             //}
 
