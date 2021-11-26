@@ -4,7 +4,7 @@ const request = require('request');
 // const pool = new Pool();
 // const axios = require("axios").default;
 
-//  Seleciona Pedido pelo Id: 
+//  Seleciona e Cria Pedido pelo Id: 
   exports.findOrderById = async (req, res) => {
     const { id } = req.params;
     /* const { id } = req.body; */
@@ -36,13 +36,20 @@ const request = require('request');
               // Conn Postgresql
              (async () => {
                const { rows } = await db.query('INSERT INTO users(id, name, email) values($1, $2, $3)', 
-               [id, name, email])
+               [id, name, email]);
+              //(error, resultado, field) => {
+              //if (error) { return res.status(500).send({error: error})}
 
-                   res.json({
-                   message: 'Pedido Criado com Successo',
-                     order: { id, name, email }
-                 });
-             })().catch(err => setImmediate(() => {throw err}))
+                res.status(200).send({
+                message: 'Pedido Criado com Successo',
+                order: { id, name, email },
+               })
+              //}
+
+             })().catch(error => {
+               //console.log(error);
+               return res.status(400).send({error: error});
+             })
           } 
       }
   ); 
@@ -75,22 +82,26 @@ exports.findOrderPgto = async (req, res) => {
               const _id = data._id || '';
 
               // Conn Postgresql
-             (async () => {
-               const { rows } = await db.query(
-              'INSERT INTO payments(payment_total, payment_installments, payment_method, payment_type, _id) values($1, $2, $3, $4, $5)', 
-               [payment_total, payment_installments, payment_method, payment_type, _id])
+          (async () => {
+            const { rows } = await db.query(
+              'INSERT INTO payments(payment_total, payment_installments, payment_method, payment_type, _id) values($1, $2, $3, $4, $5)',
+              [payment_total, payment_installments, payment_method, payment_type, _id])
+            //(error, resultado, field) => {
+            //if (error) { return res.status(500).send({error: error})}
 
-                   res.json({
-                   message: 'Pagamento Criado com Successo',
-                   body: {
-                    payments: {payment_total, payment_installments, payment_method, payment_type, _id}
-                   },
-                 });
-                
-             })().catch(err => setImmediate(() => {throw err}))
-          } 
+            res.status(200).send({
+              message: 'Pagamento Atualizado com Successo',
+              order: { id, name, email },
+            })
+            //}
+
+          })().catch(error => {
+            //console.log(error);
+            return res.status(400).send({ error: error });
+          })
+        }
       }
-  ); 
+   );
 };
 
 //  ==> GET do Pedido Atualizado:
@@ -151,21 +162,24 @@ exports.updateOrderById = async (req, res) => {
               `UPDATE orders SET status = $1, id = $2, shipping_method = $3, track_code = $4, track_url = $5, date_shipped = $6, nfe_key = $7, nfe_link = $8, nfe_number = $9, nfe_serie = $10, nfe_date = $11 
               WHERE id = $2`, 
 
-               [status, id, shipping_method, track_code, track_url, date_shipped, nfe_key, nfe_link, nfe_number, nfe_serie, nfe_date]);
+              [status, id, shipping_method, track_code, track_url, date_shipped, nfe_key, nfe_link, nfe_number, nfe_serie, nfe_date]);
 
-                   res.json({
-                   message: 'Pedido Atualizado com Successo',
-                   body: {
-                     order: {
-                      status, 
-                      id, shipping_method, track_code, track_url, date_shipped, nfe_key, nfe_link, nfe_number, nfe_serie, nfe_date}
-                   },
-                 });
-                
-             })().catch(err => setImmediate(() => {throw err}))
-          } 
+            //(error, resultado, field) => {
+            //if (error) { return res.status(500).send({error: error})}
+
+            res.status(200).send({
+              message: 'Pedido Atualizado com Successo',
+              order: { id, name, email },
+            })
+            //}
+
+          })().catch(error => {
+            //console.log(error);
+            return res.status(400).send({ error: error });
+          })
+        }
       }
-  ); 
+    );
 };
 
 //  ==> Envio do Status Faturado:
@@ -233,7 +247,7 @@ request(options, (error, response, body) => {
   //   },
   // });
 
-});
+  });
 };
 
 //  Lista todos os orders DB:
@@ -257,7 +271,7 @@ exports.listAllOrders_db = async (req, res) => {
         res.status(200).send(response.rows);
       };
 
-      //  Atualiza um Pedido pelo Id DB: --Rota apenas para testes
+//  Atualiza um Pedido pelo Id DB: --Rota apenas para testes
         exports.updateOrderById_db = async (req, res) => {
           // const id_order = parseInt(req.params.id);
           const { id, name, email } = req.body;
