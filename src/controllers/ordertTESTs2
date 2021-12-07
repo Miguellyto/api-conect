@@ -730,7 +730,9 @@ CUSTO --Preço
 from MOVDEPOS
 LIMIT 10;
 
----Produto OK---
+///////////////////////////QUERYS DO INO////////////////////////////////////////////////////////////////
+
+---PRODUTO OK---
 select 
     a.chave, 
     a.ean,
@@ -766,7 +768,7 @@ select
     and b.fim is null
 where codigo = '1056'
 
----Tipos de pagamento
+---TIPOS DE PAGAMENTO
 "payments" : [
  {
  "payment_total" : 24.56, // select TOTAL from PEDIDO //select VALOR from PARCELA
@@ -785,7 +787,7 @@ TIPO,
 CODIGO 
 from TABELA;
 
---------Campos obrigatórios para atualizar pedido
+--------CAMPOS OBRIGATÓRIOS PARA ATUALIZAR O PEDIDO
 {
 "status":("invoiced"/"shipping_informed"/"delivered"/"canceled"),//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "shipments":
@@ -819,7 +821,7 @@ SERIE,
 EMISSAO 
 from PEDIDO;
 
---------Envio do Status Faturado 
+--------ENVIO DO STATUS FATURADO 
 {
 "status":"invoiced",//select SITUACAOPEDIDO/STATUSNFE from PEDIDO //select YSTATUS/STATUS from INTEGRACAO
 "shipments":
