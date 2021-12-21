@@ -5,7 +5,9 @@ const orderController = require('../controllers/order.controller');
 router.get('/order/:id', orderController.findOrderById);
 
 //  Lista todos os pedido: (GET): localhost:4000/api/orders
+///setInterval(function() {
 router.get('/orders', orderController.listAllOrders);
+///}, 1000);
 
 //  Lista todos os pedido: (GET): localhost:4000/api/orders_db
 router.get('/orders_db', orderController.listAllOrders_db);

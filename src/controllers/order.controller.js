@@ -227,7 +227,10 @@ exports.findOrderShipping = async (req, res) => {
 };
 
 //  Lista todos os orders EndPoint:
-exports.listAllOrders = async (req, res) => {
+  //setInterval(async() => {
+  exports.listAllOrders = async (req, res) => {
+
+  setInterval(() => {
   const options = {
   method: 'GET',
   // url: 'https://jsonplaceholder.typicode.com/posts/',
@@ -240,20 +243,12 @@ exports.listAllOrders = async (req, res) => {
 };
 request(options, (error, response, body) => {
   if (error) throw new Error(error);
-
-  // console.log(req.body);
-  // res.json(body);
-  res.status(200).send(body);
-  
-  // res.json({
-  //   message: '',
-  //   body: {
-  //     order: { body }
-  //   },
-  // });
-
-  });
+  console.log(body);
+  //--res.status(200).send(body);
+    });
+  }, 3500);
 };
+
 
 //  Lista todos os orders DB:
 exports.listAllOrders_db = async (req, res) => {
