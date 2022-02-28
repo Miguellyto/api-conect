@@ -1,7 +1,7 @@
 const db = require("../config/database");
 //const moment = require('moment-timezone');
-const Sequelize = require('sequelize');
-const DataTypes = require('sequelize/lib/data-types');
+// const Sequelize = require('sequelize');
+// const DataTypes = require('sequelize/lib/data-types');
 //const moment = require('moment-timezone');
 const moment = require('moment');
 
