@@ -232,10 +232,11 @@ exports.findOrderShipping = async (req, res) => {
 //  Lista todos os orders EndPoint:
   exports.listAllOrders = async (req, res, next) => {
   
-  setInterval(() => {
-    if(MyFunction() > 0) 
+  // setInterval(() => {
+  //   if(MyFunction() > 0) 
     
-  const options = {
+    const options = {
+  // function options = {
   method: 'GET',
   // url: 'https://jsonplaceholder.typicode.com/posts/',
   url: 'http://jsonplaceholder.typicode.com/users',
@@ -254,7 +255,7 @@ request(options, (error, response, body) => {
   // res.send(body);
     });
     request();
-  }, 3500);
+  // }, 3500);
 };
 
 
