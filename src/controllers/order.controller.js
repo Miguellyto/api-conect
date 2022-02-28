@@ -14,6 +14,8 @@ const request = require('request');
   //     res.status(500); 
   //     res.send({"Error": "No ID"}); 
   //  } 
+  // setInterval (() =>{  
+  
     const options = {
       method: 'GET',
       // url: `https://api.plugg.to/orders/${id}`,
@@ -49,13 +51,14 @@ const request = require('request');
               //}
 
              })().catch(error => {
-               //console.log(error);
+               console.log(error);
                //return res.status(400).send({error: error});
                return res.status(400).json({error: 'The Specified Order ID Already Exists!'});
-             })
-          } 
-      }
-  ); 
+             });
+            } 
+          }
+          ); 
+        // }, 3500);
 };
 ///------------------------------------------------------
 
@@ -227,10 +230,11 @@ exports.findOrderShipping = async (req, res) => {
 };
 
 //  Lista todos os orders EndPoint:
-  //setInterval(async() => {
-  exports.listAllOrders = async (req, res) => {
-
+  exports.listAllOrders = async (req, res, next) => {
+  
   setInterval(() => {
+    if(MyFunction() > 0) 
+    
   const options = {
   method: 'GET',
   // url: 'https://jsonplaceholder.typicode.com/posts/',
@@ -243,25 +247,36 @@ exports.findOrderShipping = async (req, res) => {
 };
 request(options, (error, response, body) => {
   if (error) throw new Error(error);
+  //--res.setHeader('X-Foo', 'bar');
+  //--res.setHeader('Content-Type', 'text/plain');
   console.log(body);
-  //--res.status(200).send(body);
+  // res.status(200).send(body);
+  // res.send(body);
     });
+    request();
   }, 3500);
 };
 
 
 //  Lista todos os orders DB:
 exports.listAllOrders_db = async (req, res) => {
+
+  // setInterval(() => {
+
   const response = await db.query(
     'SELECT * FROM users ORDER BY id ASC',
     // 'SELECT * FROM titles ORDER BY id ASC',
     //'SELECT * FROM titles ORDER BY title DESC',
   );
   res.status(200).send(response.rows);
+  // }, 3500);
 };
 
 //  Seleciona order pelo Id DB:
       exports.findOrderById_db = async (req, res) => {
+
+        // setInterval(function () {
+
         const id = parseInt(req.params.id);
         const response = await db.query(
           'SELECT * FROM users WHERE id = $1',
@@ -269,7 +284,8 @@ exports.listAllOrders_db = async (req, res) => {
           [id],
         );
         res.status(200).send(response.rows);
-      };
+        // }, 3500);
+    };
 
 //  Atualiza um Pedido pelo Id DB: --Rota apenas para testes
         exports.updateOrderById_db = async (req, res) => {
@@ -286,7 +302,7 @@ exports.listAllOrders_db = async (req, res) => {
             order: { id, name, email }
           },
         });
-      };
+    };
 
 // cria um novo Pedido:
       // exports.createOrder = async (req, res) => {
