@@ -78,3 +78,23 @@ SELECT * FROM products;
 
  --Verificando o tamanho das Bases de Dados no pg
 SELECT pg_database.datname, pg_size_pretty(pg_database_size(pg_database.datname)) AS size FROM pg_database;
+
+--Tem também esse script que peguei (https://makandracards.com/zeroglosa/39955-consulta-postgres-para-ver-os-tamanhos-de-todos-os-bancos)
+--, que mostra os bancos excluindo os bancos padrão do sistema e a soma do tamanho das bases no servidor.
+(SELECT
+	datname                                   AS banco,
+	pg_database_size(datname)                 AS tamanho,
+	pg_size_pretty(pg_database_size(datname)) AS tamanho_pretty
+FROM pg_database
+WHERE datname NOT IN ('template0', 'template1', 'postgres')
+ORDER BY tamanho DESC, banco ASC)
+
+UNION ALL
+
+(SELECT
+	'TOTAL'                                        AS banco,
+	sum(pg_database_size(datname))                 AS tamanho,
+	pg_size_pretty(sum(pg_database_size(datname))) AS tamanho_pretty
+FROM pg_database
+WHERE datname NOT IN ('template0', 'template1', 'postgres'));
+
