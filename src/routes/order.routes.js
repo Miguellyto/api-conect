@@ -1,14 +1,16 @@
 const router = require('express-promise-router')();
 const orderController = require('../controllers/order.controller');
 
+// TESTE NO ENDPOINT EXTERNO:  url: `https://jsonplaceholder.typicode.com/comments/${id}`,
+// Seleciona pelo ID e cria no BD de desenvolvimento
 //  Seleciona pedido pelo Id: (GET): localhost:4000/api/order/:id
 router.get('/order/:id', orderController.findOrderById);
 
+//  MOSTRA TODOS OS REGISTRO DO ENDPOINT: url: `https://jsonplaceholder.typicode.com/comments/${id}`,
 //  Lista todos os pedido: (GET): localhost:4000/api/orders
-
 router.get('/orders', orderController.listAllOrders);
 
-
+// TESTE NO BD DE DESENVOLVIMENTO
 //  Lista todos os pedido: (GET): localhost:4000/api/orders_db
 router.get('/orders_db', orderController.listAllOrders_db);
 
@@ -18,6 +20,7 @@ router.patch('/order_db/:id', orderController.updateOrderById_db);
 //  Seleciona pedido pelo Id: (GET): localhost:4000/api/order_db/:id
 router.get('/order_db/:id', orderController.findOrderById_db);
 
+// TESTE NA HLASER
 // Pagamento do Pedido: (GET): localhost:4000/api/order/pgto/:id
 router.get('/order/pgto/:id', orderController.findOrderPgto);
 
