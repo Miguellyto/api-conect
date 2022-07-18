@@ -871,3 +871,32 @@ TIPOFRETE,
 CODIGORASTREIO / RASTREIO,
 'track_url' as track_url
 from PEDIDO;
+
+--QUERY PARA POWERBI
+SELECT 
+e.CODIGO || ' - ' || e.NOME || ' - ' || e.CGCCPF as FILIAL,
+p.estabeleciped, --as FILIAL,
+e.CODIGO || ' - ' || e.NOME || ' ( ' || e.CGCCPF || ' ) ' as VENDEDOR,
+p.REPRESENTA, --as VENDEDOR,
+e.ENDERECO || ' - ' || e.BAIRRO as ENDERECO,
+e.CIDADE,
+t.CODIGO as UF,
+e.CEP,
+p.CHAVE as PEDIDO,
+r.NOME as PRODUTO,
+p.TOTALLIQUIDO as PRECO,
+p.QUANTIDADE as QTD,
+p.TOTAL,
+P.EMISSAOPED as DATAPED,
+P.EMISSAOPEDH as HORA
+from PEDIDO p
+join ENTIDADE e
+on p.estabeleciped = e.CHAVE
+join TABELA t
+on p.UFPESSOAOP = t.CHAVE
+join RECURSO r
+on p.RECURSO = r.CHAVE
+-- join ENTIDADE e
+-- on p.REPRESENTA = e.CGCCPF
+-- WHERE p.APROVACAO = 28/07/2018
+LIMIT 300;
